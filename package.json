@@ -1,0 +1,45 @@
+{
+  "name": "printflow-3d",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev --host 0.0.0.0 --port 3000",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@google/genai": "^1.29.0",
+    "@nuxt/ui": "^4.5.0",
+    "@nuxt/ui-pro": "^3.3.7",
+    "@nuxtjs/color-mode": "^4.0.0",
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@tailwindcss/postcss": "^4.2.1",
+    "@tailwindcss/vite": "^4.1.14",
+    "@vitejs/plugin-vue": "^6.0.4",
+    "@vue/runtime-core": "^3.5.29",
+    "@vueuse/core": "^14.2.1",
+    "axios": "^1.13.5",
+    "better-sqlite3": "^12.4.1",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "lucide-vue-next": "^0.575.0",
+    "motion": "^12.23.24",
+    "nuxt": "^4.3.1",
+    "vite": "^6.2.0",
+    "vue": "^3.5.29"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.14.0",
+    "autoprefixer": "^10.4.21",
+    "tailwindcss": "^4.1.14",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^2.2.12"
+  }
+}
