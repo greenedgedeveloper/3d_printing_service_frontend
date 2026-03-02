@@ -90,10 +90,10 @@
               <input type="password" v-model="form.password" required placeholder="••••••••" class="w-full pl-12 pr-4 py-3 rounded-xl border border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 focus:ring-2 focus:ring-primary-500 outline-none dark:text-white transition-all" />
             </div>
           </div>
-          <div class="flex items-center gap-2">
+          <!-- <div class="flex items-center gap-2">
             <input type="checkbox" id="remember" class="w-4 h-4 rounded border-secondary-300 dark:border-secondary-700 text-primary-600 focus:ring-primary-500 bg-white dark:bg-secondary-800" />
             <label for="remember" class="text-sm text-secondary-600 dark:text-secondary-400">Remember me for 30 days</label>
-          </div>
+          </div> -->
           <UButton 
             type="submit" 
             block 
@@ -122,6 +122,15 @@
 <script setup lang="ts">
 import { Box, Mail, Lock, ArrowRight, Zap, ShieldCheck } from 'lucide-vue-next';
 
+const userCookie = useCookie('auth_user');
+if (userCookie.value) {
+  navigateTo('/dashboard');
+}
+
+console.log('User cookie value:', userCookie.value);
+const user = userCookie.value;
+console.log('Logged in user:', user);
+
 const form = reactive({
   email: '',
   password: ''
@@ -130,27 +139,54 @@ const form = reactive({
 const loginLoading = ref(false);
 
 const handleLogin = async () => {
+  const toast = useToast();
   try {
     loginLoading.value = true;
-    const response = await useFetch('/api/auth/login', {
+    const response = await $fetch('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify(form)
-    });
+    }) as any;
 
-    if (response && response.data && response.data.value) {
-      const { token } = response.data.value;
+    console.log('Login response:', response);
+
+
+    if (response && response.isSuccessful) {
       // Store the token (e.g., in localStorage or a cookie)
-      localStorage.setItem('authToken', token);
+      const tokenCookie = useCookie('auth_token');
+      tokenCookie.value = response.token;
+
+      const userCookie = useCookie('auth_user');
+      userCookie.value = response.user;
+
+      if(response.isSuccessful) {
+        return navigateTo('/dashboard');
+      } else {
+        console.error('Login failed:', response.message || 'Unknown error');
+        toast.add({
+          title: 'Login Failed',
+          description: response.message || 'Please check your credentials and try again.',
+          color: 'error',
+        }); 
+        return;
+      }
     } else {
-      console.error('Login failed: No token received');
+      console.error('An unexpected error occurred during login. No response data received.');
+      toast.add({
+        title: 'Login Failed',
+        description: "An unexpected error occurred. Please try again later.",
+        color: 'error',
+      });
     }
 
   } catch (error) {
     console.error('Login error:', error);
+    toast.add({
+      title: 'Login Failed',
+      description: error instanceof Error ? error.message : 'An unexpected error occurred. Please try again later.',
+      color: 'error',
+    });
   } finally {
     loginLoading.value = false;
   }
-
-  navigateTo('/dashboard');
 };
 </script>

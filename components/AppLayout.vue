@@ -55,7 +55,7 @@
           variant="ghost" 
           color="secondary" 
           class="justify-start gap-3 px-3 py-2 rounded-lg"
-          @click="navigateTo('/login')"
+          @click="logout"
         >
           <LogOut class="w-5 h-5" />
           <span>Log Out</span>
@@ -119,5 +119,29 @@ defineProps<{
   title: string;
 }>();
 
+const userCookie = useCookie('auth_user');
+if (!userCookie.value) {
+  navigateTo('/login');
+}
+
+console.log('User cookie value:', userCookie.value);
+const user = userCookie.value;
+console.log('Logged in user:', user);
+
 const isMobileMenuOpen = ref(false);
+
+const logout = async () => {
+  try {
+    await $fetch('/api/auth/logout', {
+      method: 'POST'
+    });
+    // Clear the user cookie
+    const userCookie = useCookie('auth_user');
+    userCookie.value = null;
+    // Redirect to login page
+    navigateTo('/login');
+  } catch (error) {
+    console.error('Logout failed:', error);
+  }
+};
 </script>

@@ -1,3 +1,10 @@
+<script setup lang="ts">
+const toaster = { position: "top-right" };
+</script>
+
 <template>
-  <NuxtPage />
+  <UApp :toaster="{ position: 'top-center'}">
+    <NuxtPage />
+  </UApp>
 </template>
+
