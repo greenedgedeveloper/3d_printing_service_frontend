@@ -7,12 +7,12 @@
           <img src="https://picsum.photos/seed/login-bg/800/1200" alt="Background" class="w-full h-full object-cover" referrerPolicy="no-referrer" />
         </div>
         <div class="relative z-10">
-          <div class="flex items-center gap-2 mb-8 lg:mb-12">
+          <NuxtLink to="/" class="flex items-center gap-2 mb-8 lg:mb-12">
             <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-white">
               <Box class="w-5 h-5" />
             </div>
             <span class="font-bold text-lg lg:text-xl tracking-tight">PrintFlow Pro</span>
-          </div>
+          </NuxtLink>
           <div class="mt-12 lg:mt-20">
             <h2 class="text-3xl lg:text-5xl font-bold leading-tight mb-8">
               Precision <span class="text-primary-400">Control</span> for Your Print Fleet
@@ -83,7 +83,7 @@
           <div>
             <div class="flex items-center justify-between mb-2">
               <label class="block text-sm font-semibold text-secondary-700 dark:text-secondary-300">Password</label>
-              <a href="#" class="text-xs font-semibold text-primary-600 dark:text-primary-400 hover:underline">Forgot password?</a>
+              <NuxtLink to="/forgot-password" class="text-xs font-semibold text-primary-600 dark:text-primary-400 hover:underline">Forgot password?</NuxtLink>
             </div>
             <div class="relative">
               <Lock class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary-400 dark:text-secondary-500" />
@@ -150,7 +150,7 @@ const handleLogin = async () => {
     console.log('Login response:', response);
 
 
-    if (response && response.isSuccessful) {
+    if (response) {
       // Store the token (e.g., in localStorage or a cookie)
       const tokenCookie = useCookie('auth_token');
       tokenCookie.value = response.token;

@@ -1,5 +1,5 @@
 <template>
-  <AppLayout title="Settings">
+  <AppLayout title="Settings" v-slot="slotProps">
     <div class="max-w-4xl mx-auto space-y-8 transition-colors duration-300">
       <!-- Profile Section -->
       <section class="bg-white dark:bg-secondary-900 rounded-3xl border border-secondary-200 dark:border-secondary-800 p-6 lg:p-8 shadow-sm">
@@ -18,11 +18,11 @@
             </UButton>
           </div>
           <div class="text-center sm:text-left">
-            <h3 class="text-xl font-bold text-secondary-900 dark:text-white">John Doe</h3>
-            <p class="text-sm text-secondary-500 dark:text-secondary-400">john.doe@example.com</p>
+            <h3 class="text-xl font-bold text-secondary-900 dark:text-white">{{ slotProps.user?.firstName }} {{ slotProps.user?.lastName }}</h3>
+            <p class="text-sm text-secondary-500 dark:text-secondary-400">{{ slotProps.user?.email }}</p>
             <div class="mt-2 flex items-center justify-center sm:justify-start gap-2">
-              <span class="px-2 py-0.5 bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 text-[10px] font-bold uppercase tracking-wider rounded">Pro Plan</span>
-              <span class="text-[10px] text-secondary-400 dark:text-secondary-500 font-medium">Member since Jan 2024</span>
+              <span class="px-2 py-0.5 bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 text-[10px] font-bold uppercase tracking-wider rounded">User</span>
+              <span class="text-[10px] text-secondary-400 dark:text-secondary-500 font-medium">Member since {{ slotProps.user?.createdAt }}</span>
             </div>
           </div>
         </div>
@@ -30,25 +30,25 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
             <label class="block text-sm font-semibold text-secondary-700 dark:text-secondary-300 mb-2">First Name</label>
-            <input type="text" value="John" class="w-full px-4 py-3 rounded-xl border border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 focus:ring-2 focus:ring-primary-500 outline-none transition-all text-sm dark:text-white" />
+            <input disabled type="text" :value="slotProps.user?.firstName" class="w-full px-4 py-3 rounded-xl border border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 focus:ring-2 focus:ring-primary-500 outline-none transition-all text-sm dark:text-white" />
           </div>
           <div>
             <label class="block text-sm font-semibold text-secondary-700 dark:text-secondary-300 mb-2">Last Name</label>
-            <input type="text" value="Doe" class="w-full px-4 py-3 rounded-xl border border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 focus:ring-2 focus:ring-primary-500 outline-none transition-all text-sm dark:text-white" />
+            <input disabled type="text" :value="slotProps.user?.lastName" class="w-full px-4 py-3 rounded-xl border border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 focus:ring-2 focus:ring-primary-500 outline-none transition-all text-sm dark:text-white" />
           </div>
           <div class="sm:col-span-2">
             <label class="block text-sm font-semibold text-secondary-700 dark:text-secondary-300 mb-2">Email Address</label>
-            <input type="email" value="john.doe@example.com" class="w-full px-4 py-3 rounded-xl border border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 focus:ring-2 focus:ring-primary-500 outline-none transition-all text-sm dark:text-white" />
+            <input disabled type="email" :value="slotProps.user?.email" class="w-full px-4 py-3 rounded-xl border border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-800 focus:ring-2 focus:ring-primary-500 outline-none transition-all text-sm dark:text-white" />
           </div>
         </div>
-        <div class="mt-8 flex justify-end">
+        <!-- <div class="mt-8 flex justify-end">
           <UButton 
             size="lg" 
             class="px-8 rounded-xl font-bold shadow-lg shadow-primary-200 dark:shadow-none"
           >
             Save Profile
           </UButton>
-        </div>
+        </div> -->
       </section>
 
       <!-- Change Password Section -->
@@ -103,6 +103,8 @@
               type="submit" 
               size="lg" 
               class="px-8 rounded-xl font-bold shadow-lg shadow-primary-200 dark:shadow-none"
+              :loading="changePasswordLoading"
+              :disabled="changePasswordLoading"
             >
               Update Password
             </UButton>
@@ -111,7 +113,7 @@
       </section>
 
       <!-- Notifications Section -->
-      <section class="bg-white dark:bg-secondary-900 rounded-3xl border border-secondary-200 dark:border-secondary-800 p-6 lg:p-8 shadow-sm">
+      <!-- <section class="bg-white dark:bg-secondary-900 rounded-3xl border border-secondary-200 dark:border-secondary-800 p-6 lg:p-8 shadow-sm">
         <h3 class="text-lg font-bold mb-6 dark:text-white">Notifications</h3>
         <div class="space-y-4">
           <div v-for="pref in notificationPrefs" :key="pref.id" class="flex items-center justify-between p-4 bg-secondary-50 dark:bg-secondary-800/50 rounded-2xl">
@@ -122,7 +124,7 @@
             <UToggle v-model="pref.enabled" />
           </div>
         </div>
-      </section>
+      </section> -->
 
       <!-- Danger Zone -->
       <section class="bg-red-50 dark:bg-red-900/10 rounded-3xl border border-red-100 dark:border-red-900/30 p-6 lg:p-8">
@@ -143,6 +145,8 @@
 <script setup lang="ts">
 import { Camera, Lock, Eye, EyeOff } from 'lucide-vue-next';
 
+const changePasswordLoading = ref(false);
+
 const passwords = reactive({
   current: '',
   new: '',
@@ -161,8 +165,52 @@ const notificationPrefs = reactive([
   { id: 3, name: 'Marketing Emails', description: 'Stay informed about new features and offers.', enabled: true }
 ]);
 
-const handleChangePassword = () => {
-  alert('Password updated successfully!');
+const toast = useToast();
+
+const handleChangePassword = async () => {
+  // alert('Password updated successfully!');
+
+  if(passwords.new !== passwords.confirm) {
+    toast.add({
+      title: 'Error',
+      description: 'New password and confirmation do not match.',
+      color: 'error'
+    });
+    return;
+  }
+
+  try {
+    changePasswordLoading.value = true;
+    const response = await $fetch('/api/auth/change-password', {
+      method: 'POST',
+      body: {
+        currentPassword: passwords.current,
+        newPassword: passwords.new,
+      }
+    }) as any;
+
+    if (response.isSuccessful) {
+      toast.add({
+        title: 'Success',
+        description: 'Your password has been updated!',
+        color: 'success'
+      });
+    } else {
+      toast.add({
+        title: 'Error',
+        description: response.message || 'Failed to update password. Please try again.',
+        color: 'error'
+      });
+    }
+  } catch (error) {
+    toast.add({
+      title: 'Error',
+      description: 'Failed to update password. Please try again.',
+      color: 'error'
+    });
+  } finally {
+    changePasswordLoading.value = false;
+  }
   passwords.current = '';
   passwords.new = '';
   passwords.confirm = '';

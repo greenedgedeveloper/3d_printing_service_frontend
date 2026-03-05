@@ -22,6 +22,14 @@ export default defineEventHandler(async (event) => {
           secure: process.env.NODE_ENV === 'production',
           sameSite: 'lax',
           path: '/',
+          maxAge: 60 * 5 // 5 minutes
+        })
+
+        setCookie(event, 'refresh_token', data.refreshToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax',
+          path: '/',
           maxAge: 60 * 60 * 24 * 7 // 7 days
         })
 
@@ -45,12 +53,12 @@ export default defineEventHandler(async (event) => {
     return loginResponse;
 
   }
-  catch (error) {
+  catch (error: any) {
     console.error("Login error:", error);
     
     return {
       isSuccessful: false,
-      message: error instanceof Error ? error.message : 'An unexpected error occurred. Please try again later.'
+      message: error.data || (error instanceof Error ? error.message : 'An unexpected error occurred. Please try again later.')
     }
   }
 

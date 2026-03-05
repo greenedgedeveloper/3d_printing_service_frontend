@@ -86,7 +86,7 @@
         </div>
       </header>
       <div class="p-4 lg:p-8">
-        <slot></slot>
+        <slot :user="user"></slot>
       </div>
     </main>
 
@@ -125,7 +125,7 @@ if (!userCookie.value) {
 }
 
 console.log('User cookie value:', userCookie.value);
-const user = userCookie.value;
+const user = userCookie.value as any;
 console.log('Logged in user:', user);
 
 const isMobileMenuOpen = ref(false);
