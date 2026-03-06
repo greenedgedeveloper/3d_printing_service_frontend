@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   const { fileName, base64Content } = body;
 
   try {
-    const response = await ApiPost(event, `${config.apiServerBaseUrl}/api/file/upload-base64`, { fileName, base64Content }, true);
+    const response = await ApiPost(event, `${config.apiServerBaseUrl}/api/upload/base64file`, { fileName, base64Content }, true);
     return response;
   } catch (error: any) {
     console.error("Error uploading file:", error);

@@ -2,10 +2,8 @@
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
-  const body = await readBody(event);
-
   try {
-    const response = await ApiPost(event, `${config.apiServerBaseUrl}/api/order/save-order-item`, body, true);
+    const response = await ApiGet(event, `${config.apiServerBaseUrl}/api/order/get-pending-order-items`, true);
     return response;
   } catch (error: any) {
     console.error("Error saving order item:", error);
