@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event);
 
   try {
-    const response = await ApiPost(event, `${config.apiServerBaseUrl}/api/order/save-order-item`, body, true);
+    const response = await ApiPost(event, `${config.apiServerBaseUrl}/api/orderItem/save-order-item`, body, true);
     
     return response;
   } catch (error: any) {
