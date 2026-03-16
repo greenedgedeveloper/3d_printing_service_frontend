@@ -37,15 +37,15 @@
                             <span class="text-xs font-medium text-secondary-700 dark:text-secondary-300">Material: {{
                                 model.material }}</span>
                         </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <UButton variant="outline" color="secondary" size="xs"
+                        <div class="text-center">
+                            <!-- <UButton variant="outline" color="secondary" size="xs"
                                 class="rounded-lg font-bold justify-center" icon="i-lucide-pen"
                                 @click="navigateTo(`/model/${model.id}`)">
                                 Edit
-                            </UButton>
+                            </UButton> -->
                             <UButton variant="outline" color="secondary" size="xs"
                                 class="rounded-lg font-bold justify-center" icon="i-lucide-minus"
-                                @click="navigateTo('/chat')">
+                                @click="removeAction(model.id)" :loading="removeOrderItemLoading" :disabled="removeOrderItemLoading">
                                 Remove
                             </UButton>
                         </div>
@@ -84,36 +84,15 @@
         </div>
         <div v-if="!uploadFileLoading && currentUploadFileUrl" class="flex flex-wrap justify-center items-center gap-4 mb-8">
             <ModelPreview :model-url="currentUploadFileUrl" @reupload="currentUploadFileUrl = ''"></ModelPreview>
-            <div class="flex flex-col justify-center items-center gap-4">
-                <UFormField label="Product Name" required>
-                    <UInput v-model="orderItemEdit.productName" placeholder="Enter product name" />
-                </UFormField>
-                <UFormField label="Color" required>
-                    <USelect v-model="orderItemEdit.color" :items="['Black', 'White']" class="w-48" />
-                </UFormField>
-                <UFormField label="Material" required>
-                    <USelect v-model="orderItemEdit.material" :items="['PLA', 'ABS']" class="w-48" />
-                </UFormField>
-                <UFormField label="Quantity" required>
-                    <UInputNumber :min="1" :max="1000" v-model="orderItemEdit.quantity" />
-                </UFormField>
-                <UFormField label="Description" hint="Optional">
-                    <UTextarea v-model="orderItemEdit.description" placeholder="Write any extra details here." />
-                </UFormField>
-
-                <UButton :loading="addToOrderLoading" size="xl" @click="addToOrder">Add to Order</UButton>
-            </div>
+            <CreateOrderItem @on-saved="()=>{getPendingOrderItems(); currentUploadFileUrl=''}"></CreateOrderItem>
         </div>
-
-
-        <!-- Models Grid -->
-        
     </div>
 </template>
 
 <script setup lang="ts">
 import { UploadCloud, Search, Filter, Calendar, Database, Box, Eye, MessageSquare, ShoppingCart } from 'lucide-vue-next';
 import ModelPreview from './ModelPreview.vue';
+import CreateOrderItem from './CreateOrderItem.vue';
 
 const config = useRuntimeConfig();
 
@@ -122,22 +101,13 @@ const fileInput = ref<HTMLInputElement | null>(null);
 
 const currentUploadFileUrl = ref('');
 const uploadFileLoading = ref(false);
-const addToOrderLoading = ref(false);
 const getPendingOrderItemsLoading = ref(false);
 
 const pendingOrderItems = ref([] as any);
 
+const removeOrderItemLoading = ref(false);
+
 const toast = useToast();
-
-// const { data: models, refresh } = await useFetch('/api/order/pending-order-items');
-
-const orderItemEdit = reactive({
-    productName: "",
-    description: "",
-    color: "",
-    material: "",
-    quantity: 1,
-})
 
 const handleDrop = (e: DragEvent) => {
     isDragging.value = false;
@@ -170,35 +140,6 @@ const getPendingOrderItems = async ()=>{
 
     } finally {
         getPendingOrderItemsLoading.value = false;
-    }
-}
-
-const addToOrder = async () =>{
-    try {
-        addToOrderLoading.value = true;
-        const payload = {
-            ...orderItemEdit
-        }
-
-        const response = await $fetch('/api/order/save-order-item', {
-            method: 'POST',
-            body: payload
-        }) as any
-
-        console.log(response)
-
-        if(response.isSuccessful) {
-            await getPendingOrderItems();
-        }
-    } catch (e: any) {
-        console.log(e)
-        toast.add({
-            title: "An error occurred",
-            description: e.message,
-            color: "error"
-        })
-    } finally {
-        addToOrderLoading.value = false;
     }
 }
 
@@ -256,6 +197,28 @@ function fileToBase64(file: File): Promise<string> {
 
         reader.onerror = error => reject(error)
     })
+}
+
+async function removeAction(id: number) {
+    try {
+        console.log(id)
+        removeOrderItemLoading.value = true;
+        const response = await $fetch('/api/order/remove-order-item', {
+            method:'POST',
+            body: {id }
+        })
+        if(response.isSuccessful = true) {
+            await getPendingOrderItems();
+        }
+    } catch(e: any) {
+        toast.add({
+            title: "An error occurred.",
+            description: e.message,
+            color: "error"
+        })
+    } finally {
+        removeOrderItemLoading.value = false;
+    }
 }
 
 onMounted(()=>{
