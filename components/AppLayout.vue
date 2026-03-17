@@ -33,7 +33,7 @@
       <nav class="flex-1 px-4 space-y-1">
         <NuxtLink to="/dashboard" @click="isMobileMenuOpen = false" class="flex items-center gap-3 px-3 py-2 text-secondary-600 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-800 rounded-lg transition-colors" active-class="bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400">
           <LayoutGrid class="w-5 h-5" />
-          <span>Projects</span>
+          <span>Place Order</span>
         </NuxtLink>
         <NuxtLink to="/chat" @click="isMobileMenuOpen = false" class="flex items-center gap-3 px-3 py-2 text-secondary-600 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-800 rounded-lg transition-colors" active-class="bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400">
           <MessageSquare class="w-5 h-5" />
@@ -94,7 +94,7 @@
     <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-secondary-900 border-t border-secondary-200 dark:border-secondary-800 flex items-center justify-around h-16 z-40 px-2 transition-colors duration-300">
       <NuxtLink to="/dashboard" class="flex flex-col items-center gap-1 text-secondary-500 dark:text-secondary-400 py-1 px-3 rounded-lg" active-class="text-primary-600 dark:text-primary-400">
         <LayoutGrid class="w-5 h-5" />
-        <span class="text-[10px] font-bold uppercase tracking-wider">Projects</span>
+        <span class="text-[10px] font-bold uppercase tracking-wider">Place Order</span>
       </NuxtLink>
       <NuxtLink to="/chat" class="flex flex-col items-center gap-1 text-secondary-500 dark:text-secondary-400 py-1 px-3 rounded-lg" active-class="text-primary-600 dark:text-primary-400">
         <MessageSquare class="w-5 h-5" />

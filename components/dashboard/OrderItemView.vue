@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div
         class="bg-white dark:bg-secondary-900 rounded-2xl border border-secondary-200 dark:border-secondary-800
         overflow-hidden group hover:shadow-lg transition-all">
         <div class="aspect-video bg-secondary-100 dark:bg-secondary-800 relative overflow-hidden">
@@ -37,6 +37,37 @@
                             Remove
             </UButton> -->
         </div>
+    </div>
 </template>
 
-<script setup 
+<script setup lang="ts">
+
+const props = defineProps(['model'])
+const emits = defineEmits(['onRemoveCompleted'])
+
+const removeOrderItemLoading = ref(false)
+
+const toast = useToast();
+async function removeAction(id: number) {
+    try {
+        console.log(id)
+        removeOrderItemLoading.value = true;
+        const response = await $fetch('/api/order/remove-order-item', {
+            method:'POST',
+            body: {id }
+        })
+        if(response.isSuccessful = true) {
+            emits("onRemoveCompleted")
+            // await getPendingOrderItems();
+        }
+    } catch(e: any) {
+        toast.add({
+            title: "An error occurred.",
+            description: e.message,
+            color: "error"
+        })
+    } finally {
+        removeOrderItemLoading.value = false;
+    }
+}
+</script>"

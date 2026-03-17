@@ -1,24 +1,23 @@
-
 <template>
     <div class="flex flex-col justify-center items-center gap-4">
-                <UFormField label="Product Name" required>
-                    <UInput v-model="orderItemEdit.productName" placeholder="Enter product name" />
-                </UFormField>
-                <UFormField label="Color" required>
-                    <USelect v-model="orderItemEdit.color" :items="['Black', 'White']" class="w-48" />
-                </UFormField>
-                <UFormField label="Material" required>
-                    <USelect v-model="orderItemEdit.material" :items="['PLA', 'ABS']" class="w-48" />
-                </UFormField>
-                <UFormField label="Quantity" required>
-                    <UInputNumber :min="1" :max="1000" v-model="orderItemEdit.quantity" />
-                </UFormField>
-                <UFormField label="Description" hint="Optional">
-                    <UTextarea v-model="orderItemEdit.description" placeholder="Write any extra details here." />
-                </UFormField>
+        <UFormField label="Product Name" required>
+            <UInput v-model="orderItemEdit.productName" placeholder="Enter product name" class="w-48"  />
+        </UFormField>
+        <UFormField label="Color" required>
+            <USelect v-model="orderItemEdit.color" :items="['Black', 'White']" class="w-48" />
+        </UFormField>
+        <UFormField label="Material" required>
+            <USelect v-model="orderItemEdit.material" :items="['PLA', 'ABS']" class="w-48" />
+        </UFormField>
+        <UFormField label="Quantity" required>
+            <UInputNumber :min="1" :max="1000" v-model="orderItemEdit.quantity" class="w-48" />
+        </UFormField>
+        <UFormField label="Description" hint="Optional">
+            <UTextarea v-model="orderItemEdit.description" placeholder="Write any extra details here." class="w-48"  />
+        </UFormField>
 
-                <UButton :loading="addToOrderLoading" size="xl" @click="addToOrder">Add to Order</UButton>
-            </div>
+        <UButton :loading="addToOrderLoading" size="xl" @click="addToOrder">Add to Order</UButton>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -36,7 +35,7 @@ const orderItemEdit = reactive({
 })
 
 const toast = useToast();
-const addToOrder = async () =>{
+const addToOrder = async () => {
     try {
         addToOrderLoading.value = true;
         const payload = {
@@ -50,7 +49,7 @@ const addToOrder = async () =>{
 
         console.log(response)
 
-        if(response.isSuccessful) {
+        if (response.isSuccessful) {
             // await getPendingOrderItems();
             emits("onSaved")
         }

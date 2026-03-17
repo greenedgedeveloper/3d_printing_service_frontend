@@ -1,5 +1,5 @@
 <template>
-  <AppLayout title="My Models">
+  <AppLayout title="Place Order">
     <CreateOrder></CreateOrder>
   </AppLayout>
 </template>
