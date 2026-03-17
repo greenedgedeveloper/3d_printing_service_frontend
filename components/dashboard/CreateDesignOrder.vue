@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="grid md:grid-cols-2">
-            <UFormField label="Description" class="w-full ">
+            <UFormField label="Description" class="w-full p-4">
                 <UTextarea v-model="orderInstruction" placeholder="Kindly discribe your design here" class="w-full"></UTextarea>
             </UFormField>
             <div class="p-4">

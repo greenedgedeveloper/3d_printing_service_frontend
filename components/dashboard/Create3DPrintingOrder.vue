@@ -59,7 +59,7 @@
         </div>
          <div v-if="!(uploadFileLoading || currentUploadFileUrl)" class="mb-8 lg:mb-12">
             <div class="flex flex-col items-center pt-8 pb-4">
-                <UButton :disabled="pendingOrderItems.length < 1" size="xl" class="w-auto px-8 rounded-xl font-bold" @click="fileInput?.click()">
+                <UButton :disabled="pendingOrderItems.length < 1 || sendRequestOrderLoading" :loading="sendRequestOrderLoading" size="xl" class="w-auto px-8 rounded-xl font-bold" @click="sendOrderRequestAction">
                    Send Request
                 </UButton>
             </div>
@@ -120,6 +120,7 @@ const uploadFileLoading = ref(false);
 const getPendingOrderItemsLoading = ref(false);
 
 const pendingOrderItems = ref([] as any);
+const sendRequestOrderLoading = ref(false);
 
 const toast = useToast();
 
@@ -214,8 +215,35 @@ function fileToBase64(file: File): Promise<string> {
     })
 }
 
-const creatOrderAction = ()=>{
+const sendOrderRequestAction = async () => {
+    try {
+        sendRequestOrderLoading.value = true;
 
+        const payload = {
+            orderType: 'PrintOrder',
+            orderInstruction: "Print the models added",
+            attachments: [],
+            addPendingOrderItems: true
+        }
+
+        const response = await $fetch('/api/order/create-order', {
+            method: 'POST',
+            body: payload
+        }) as any
+
+        if(response.isSuccessful) {
+            await getPendingOrderItems();
+            toast.add({
+                title: "Success",
+                description: 'Order request has been sent successfully. We will get back to you',
+                color: 'success'
+            })
+        }
+    } catch(e: any) {
+        
+    } finally {
+        sendRequestOrderLoading.value = false;
+    }
 }
 
 onMounted(() => {
