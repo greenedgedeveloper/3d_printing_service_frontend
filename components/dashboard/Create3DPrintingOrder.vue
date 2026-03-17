@@ -60,12 +60,7 @@
          <div v-if="!(uploadFileLoading || currentUploadFileUrl)" class="mb-8 lg:mb-12">
             <div class="flex flex-col items-center pt-8 pb-4">
                 <UButton :disabled="pendingOrderItems.length < 1" size="xl" class="w-auto px-8 rounded-xl font-bold" @click="fileInput?.click()">
-                   3D printing Request
-                </UButton>
-            </div>
-            <div class="flex flex-col items-center pt-8 pb-4">
-                <UButton :disabled="pendingOrderItems.length < 1" size="xl" class="w-auto px-8 rounded-xl font-bold" @click="fileInput?.click()">
-                    Send Order Request Now
+                   Send Request
                 </UButton>
             </div>
         </div>
@@ -156,7 +151,8 @@ const getPendingOrderItems = async () => {
         }
 
     } catch (error: any) {
-
+        console.log(error)
+        
     } finally {
         getPendingOrderItemsLoading.value = false;
     }

@@ -81,7 +81,7 @@
         <div class="flex items-center gap-4">
           <ColorModePicker class="hidden sm:flex" />
           <div class="w-8 h-8 rounded-full bg-secondary-200 dark:bg-secondary-700 overflow-hidden shrink-0">
-            <img src="https://picsum.photos/seed/user/32/32" alt="Avatar" referrerPolicy="no-referrer" />
+            <img @click="navigateTo('/settings')" src="https://picsum.photos/seed/user/32/32" alt="Avatar" referrerPolicy="no-referrer" />
           </div>
         </div>
       </header>
