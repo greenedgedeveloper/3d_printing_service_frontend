@@ -1,5 +1,4 @@
 <template>
-  <AppLayout title="Chat with Staff">
     <div class="max-w-6xl mx-auto h-[calc(100vh-8rem)] lg:h-[calc(100vh-12rem)] flex flex-col lg:flex-row gap-6 lg:gap-8 transition-colors duration-300">
       <!-- Chat Area -->
       <div class="flex-1 bg-white dark:bg-secondary-900 rounded-3xl border border-secondary-200 dark:border-secondary-800 flex flex-col overflow-hidden shadow-sm min-h-0">
@@ -62,11 +61,15 @@
               class="text-secondary-400 dark:text-secondary-500"
             />
             <div class="flex-1 relative">
-              <input 
+              <UTextarea
                 type="text" 
                 v-model="newMessage"
-                placeholder="Type your message..." 
-                class="w-full px-4 lg:px-6 py-3 lg:py-4 bg-secondary-50 dark:bg-secondary-800 border border-secondary-200 dark:border-secondary-700 rounded-xl lg:rounded-2xl text-xs lg:text-sm outline-none focus:ring-2 focus:ring-primary-500 dark:text-white transition-all"
+                placeholder="Type your message..."
+                :ui="{
+                  base: 'w-full px-4 lg:px-6 py-3 lg:py-4 bg-secondary-50 dark:bg-secondary-800 border border-secondary-200 dark:border-secondary-700 rounded-xl lg:rounded-2xl text-xs lg:text-sm outline-none focus:ring-2 focus:ring-primary-500 dark:text-white transition-all',
+                }"
+                class="w-full"
+                :loading="sendMessageLoading"
               />
             </div>
             <UButton 
@@ -75,6 +78,7 @@
               square 
               icon="i-lucide-send" 
               class="rounded-xl lg:rounded-2xl shadow-lg shadow-primary-200 dark:shadow-none"
+              :loading="sendMessageLoading"
             />
           </form>
         </footer>
@@ -82,110 +86,79 @@
 
       <!-- Context Sidebar -->
       <div class="hidden lg:block lg:w-80 space-y-6">
-        <div class="bg-white dark:bg-secondary-900 rounded-3xl border border-secondary-200 dark:border-secondary-800 p-6 shadow-sm">
-          <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center gap-2 text-primary-600 dark:text-primary-400">
-              <Box class="w-5 h-5" />
-              <h4 class="font-bold text-sm">Active Project Context</h4>
-            </div>
-            <ChevronRight class="w-4 h-4 text-secondary-400 dark:text-secondary-500" />
-          </div>
-          <div class="flex gap-4 mb-6">
-            <img src="https://picsum.photos/seed/model/80/80" class="w-20 h-20 rounded-xl object-cover" referrerPolicy="no-referrer" />
-            <div>
-              <h5 class="font-bold text-sm mb-1 dark:text-white">Modular Sci-Fi Corridor</h5>
-              <p class="text-[10px] text-secondary-400 dark:text-secondary-500 mb-2">ID: 7890</p>
-              <div class="flex items-center gap-1">
-                <div class="w-1.5 h-1.5 bg-amber-500 rounded-full"></div>
-                <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400">Pending Texture</span>
-              </div>
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <UButton 
-              variant="outline" 
-              color="secondary" 
-              size="xs" 
-              class="rounded-lg font-bold justify-center"
-              icon="i-lucide-external-link"
-            >
-              Preview
-            </UButton>
-            <UButton 
-              variant="outline" 
-              color="secondary" 
-              size="xs" 
-              class="rounded-lg font-bold justify-center"
-            >
-              Details
-            </UButton>
-          </div>
-        </div>
-
-        <div class="bg-white dark:bg-secondary-900 rounded-3xl border border-secondary-200 dark:border-secondary-800 p-6 shadow-sm">
-          <h4 class="font-bold text-sm mb-6 dark:text-white">Associated Order</h4>
-          <div class="space-y-4 mb-6">
-            <div class="flex justify-between text-xs">
-              <span class="text-secondary-400 dark:text-secondary-500">Order ID:</span>
-              <span class="font-bold dark:text-white">ORD-2023-11223</span>
-            </div>
-            <div class="flex justify-between text-xs">
-              <span class="text-secondary-400 dark:text-secondary-500">Status:</span>
-              <span class="font-bold text-primary-600 dark:text-primary-400">Pending</span>
-            </div>
-            <div class="flex justify-between text-xs">
-              <span class="text-secondary-400 dark:text-secondary-500">Total:</span>
-              <span class="font-bold dark:text-white">$249.99</span>
-            </div>
-          </div>
-          <UButton 
-            block 
-            variant="outline" 
-            color="secondary" 
-            size="md" 
-            class="rounded-xl font-bold"
-            @click="navigateTo('/order')"
-          >
-            View Order Details
-          </UButton>
-        </div>
+        <OrderSideDetail ></OrderSideDetail>
       </div>
     </div>
-  </AppLayout>
 </template>
 
 <script setup lang="ts">
 import { Box, Info, MoreVertical, Send, Paperclip, ChevronRight, ExternalLink } from 'lucide-vue-next';
+import OrderSideDetail from "~/components/orders/OrderSideDetail.vue";
 
 const newMessage = ref('');
 const chatContainer = ref<HTMLElement | null>(null);
 const hints = ['What\'s the status of my order?', 'Can you provide more details on model XYZ?', 'I need help with an upload.', 'What are your support hours?', 'How do I request a quote?'];
 
-const { data: messages, refresh } = await useFetch('/api/messages');
+const orderMessagesResponse = ref({data: [], meta:{perPage: 10, currentPage: 1, pageCount: 1, total: 10}});
+const getOrderMessagesLoading = ref(false);
+const sendMessageLoading = ref(false);
+
+const toast = useToast();
+
+const getOrderMessages = async () => {
+  try {
+    getOrderMessagesLoading.value = true;
+    const response = await $fetch('/api/order-message/get-order-messages') as any;
+    if(response.isSuccessful) {
+      orderMessagesResponse.value = response;
+    }
+  } catch (error) {
+    console.error('Error fetching order messages:', error);
+    toast.add({
+      title: 'Error',
+      description: 'Failed to fetch order messages.',
+      color: 'error',
+    });
+  } finally {
+    getOrderMessagesLoading.value = false;
+  }
+}
 
 const sendMessage = async () => {
   if (!newMessage.value.trim()) return;
   
   const content = newMessage.value;
-  newMessage.value = '';
-  
-  await $fetch('/api/messages', {
-    method: 'POST',
-    body: { content, sender: 'You' }
-  });
-  await refresh();
-  
-  // Mock auto-reply
-  setTimeout(async () => {
-    await $fetch('/api/messages', {
+
+  try {
+    sendMessageLoading.value = true;
+    const response = await $fetch('/api/order-message/send-message', {
       method: 'POST',
-      body: { content: 'Certainly! I\'ll check that for you right away.', sender: 'Agent Emma' }
+      body: {
+        message: content,
+        attachments: [],
+      }
+    }) as any;
+    if (response.isSuccessful) {
+      newMessage.value = '';
+      await getOrderMessages();
+      scrollToBottom();
+    } else {
+      toast.add({
+        title: 'Error',
+        description: "Couldn't send message. " + response.message + "",
+        color: 'error',
+      });
+    }
+  } catch (error) {
+    console.error('Error sending message:', error);
+    toast.add({
+      title: 'Error',
+      description: 'Failed to send message.',
+      color: 'error',
     });
-    await refresh();
-    scrollToBottom();
-  }, 1000);
-  
-  scrollToBottom();
+  } finally {
+    sendMessageLoading.value = false;
+  }
 };
 
 const scrollToBottom = () => {
@@ -197,6 +170,7 @@ const scrollToBottom = () => {
 };
 
 onMounted(() => {
+  getOrderMessages();
   scrollToBottom();
 });
 </script>

@@ -1,6 +1,6 @@
 import type { H3Event, EventHandlerRequest } from 'h3';
 
-async function ApiGet(event: H3Event<EventHandlerRequest>, url: string, mustAuthenticate: boolean = false){
+async function ApiGet(event: H3Event<EventHandlerRequest>, url: string, mustAuthenticate: boolean = false, query: any={}){
     const authToken = await getAuthToken(event);
     if (mustAuthenticate && !authToken) {
         return {
@@ -13,7 +13,8 @@ async function ApiGet(event: H3Event<EventHandlerRequest>, url: string, mustAuth
         method: "GET",
         headers: {
             'Authorization': `Bearer ${authToken}`
-        }
+        },
+        query
     })
 }
 

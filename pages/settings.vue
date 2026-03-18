@@ -160,7 +160,7 @@ const showPasswords = reactive({
 });
 
 const notificationPrefs = reactive([
-  { id: 1, name: 'Email Notifications', description: 'Receive updates about your orders via email.', enabled: true },
+  { id: 1, name: 'Email Notifications', description: 'Receive updates about your order via email.', enabled: true },
   { id: 2, name: 'Push Notifications', description: 'Get real-time alerts on your device.', enabled: false },
   { id: 3, name: 'Marketing Emails', description: 'Stay informed about new features and offers.', enabled: true }
 ]);

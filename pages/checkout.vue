@@ -142,6 +142,6 @@ const paymentMethod = ref('card');
 
 const placeOrder = () => {
   alert('Order placed successfully!');
-  navigateTo('/orders');
+  navigateTo('/order');
 };
 </script>

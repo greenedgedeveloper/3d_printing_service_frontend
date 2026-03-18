@@ -35,10 +35,10 @@
           <LayoutGrid class="w-5 h-5" />
           <span>Place Order</span>
         </NuxtLink>
-        <NuxtLink to="/chat" @click="isMobileMenuOpen = false" class="flex items-center gap-3 px-3 py-2 text-secondary-600 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-800 rounded-lg transition-colors" active-class="bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400">
-          <MessageSquare class="w-5 h-5" />
-          <span>Chat</span>
-        </NuxtLink>
+<!--        <NuxtLink to="/chat" @click="isMobileMenuOpen = false" class="flex items-center gap-3 px-3 py-2 text-secondary-600 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-800 rounded-lg transition-colors" active-class="bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400">-->
+<!--          <MessageSquare class="w-5 h-5" />-->
+<!--          <span>Chat</span>-->
+<!--        </NuxtLink>-->
         <NuxtLink to="/orders" @click="isMobileMenuOpen = false" class="flex items-center gap-3 px-3 py-2 text-secondary-600 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-800 rounded-lg transition-colors" active-class="bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400">
           <ClipboardList class="w-5 h-5" />
           <span>Orders</span>
@@ -96,10 +96,10 @@
         <LayoutGrid class="w-5 h-5" />
         <span class="text-[10px] font-bold uppercase tracking-wider">Place Order</span>
       </NuxtLink>
-      <NuxtLink to="/chat" class="flex flex-col items-center gap-1 text-secondary-500 dark:text-secondary-400 py-1 px-3 rounded-lg" active-class="text-primary-600 dark:text-primary-400">
-        <MessageSquare class="w-5 h-5" />
-        <span class="text-[10px] font-bold uppercase tracking-wider">Chat</span>
-      </NuxtLink>
+<!--      <NuxtLink to="/chat" class="flex flex-col items-center gap-1 text-secondary-500 dark:text-secondary-400 py-1 px-3 rounded-lg" active-class="text-primary-600 dark:text-primary-400">-->
+<!--        <MessageSquare class="w-5 h-5" />-->
+<!--        <span class="text-[10px] font-bold uppercase tracking-wider">Chat</span>-->
+<!--      </NuxtLink>-->
       <NuxtLink to="/orders" class="flex flex-col items-center gap-1 text-secondary-500 dark:text-secondary-400 py-1 px-3 rounded-lg" active-class="text-primary-600 dark:text-primary-400">
         <ClipboardList class="w-5 h-5" />
         <span class="text-[10px] font-bold uppercase tracking-wider">Orders</span>
