@@ -2,7 +2,7 @@
     <div>
 <!--      {{order}}-->
       <div>
-         <OrderChat></OrderChat>
+         <OrderChat :order="order"></OrderChat>
       </div>
     </div>
 </template>

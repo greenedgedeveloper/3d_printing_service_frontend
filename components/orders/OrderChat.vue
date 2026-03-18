@@ -95,6 +95,10 @@
 import { Box, Info, MoreVertical, Send, Paperclip, ChevronRight, ExternalLink } from 'lucide-vue-next';
 import OrderSideDetail from "~/components/orders/OrderSideDetail.vue";
 
+const props = defineProps<{
+  order: any;
+}>()
+
 const newMessage = ref('');
 const chatContainer = ref<HTMLElement | null>(null);
 const hints = ['What\'s the status of my order?', 'Can you provide more details on model XYZ?', 'I need help with an upload.', 'What are your support hours?', 'How do I request a quote?'];
@@ -108,7 +112,12 @@ const toast = useToast();
 const getOrderMessages = async () => {
   try {
     getOrderMessagesLoading.value = true;
-    const response = await $fetch('/api/order-message/get-order-messages') as any;
+    const response = await $fetch('/api/order-message/get-order-messages', {
+      method: 'POST',
+      body: {
+        orderId: props.order.id
+      }
+    }) as any;
     if(response.isSuccessful) {
       orderMessagesResponse.value = response;
     }
@@ -136,6 +145,7 @@ const sendMessage = async () => {
       body: {
         message: content,
         attachments: [],
+        orderId: props.order.id
       }
     }) as any;
     if (response.isSuccessful) {
