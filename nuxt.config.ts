@@ -41,12 +41,12 @@ export default defineNuxtConfig({
     transpile: ['lucide-vue-next']
   },
   runtimeConfig: {
-    apiServerBaseUrl: process.env.API_SERVER_BASE_URL || 'http://localhost:5215',
+    apiServerBaseUrl: process.env.API_SERVER_BASE_URL || 'https://printflow-api.auptex.com',
     cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
     cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
     cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
     public: {
-      apiServerBaseUrl: process.env.API_SERVER_BASE_URL || 'http://localhost:5215',
+      apiServerBaseUrl: process.env.API_SERVER_BASE_URL || 'https://printflow-api.auptex.com',
       cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME
     }
   },
