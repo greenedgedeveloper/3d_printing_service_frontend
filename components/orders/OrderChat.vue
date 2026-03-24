@@ -68,7 +68,7 @@
           </div>
           <form @submit.prevent="sendMessage" class="flex items-center gap-2 lg:gap-4">
             <input type="file" ref="fileInput" @change="handleFileSelect" class="hidden"
-                   accept=".jpg, .jpeg, .pdf, .png, .stl,.obj,.3mf" />
+                   accept=".jpg, .jpeg, .pdf, .png, .webp, .stl,.obj,.3mf" />
             <UButton 
               type="button" 
               variant="ghost" 
@@ -132,7 +132,7 @@ const toast = useToast();
 
 const messages = ref([] as Array<any>);
 const displayMessages = computed(() => {
-  return messages.value.reverse();
+  return [...messages.value].reverse();
 })
 
 const userCookie = useCookie('auth_user');

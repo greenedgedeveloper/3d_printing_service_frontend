@@ -17,7 +17,7 @@
                     <template v-if="!uploadFileLoading">
                         <div>Add descriptive files (Images, PDFs, 3D models, etc)</div>
                         <input type="file" ref="fileInput" @change="handleFileSelect" class="hidden"
-                            accept=".jpg, .jpeg, .pdf, .png, .stl,.obj,.3mf" />
+                            accept=".jpg, .jpeg, .pdf, .png, .webp, .stl,.obj,.3mf" />
                         <UButton size="lg" class="w-auto px-8 rounded-xl font-bold my-2" @click="fileInput?.click()">
                             Choose Files
                         </UButton>
