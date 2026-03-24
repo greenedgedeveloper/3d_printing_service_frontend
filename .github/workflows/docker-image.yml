@@ -1,0 +1,37 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build the Docker image
+      run: docker build . --file ./Dockerfile --tag dozages/dozages:printflow-frontend-${{ github.run_number }}
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Push image
+      run: docker push dozages/dozages:printflow-frontend-${{ github.run_number }}
+
+    - name: SSH into Droplet and deploy
+      if: success()
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USER }}
+          password: ${{ secrets.DO_PASSWORD }}
+          script: |
+            cd ~/container_configs
+            ./restart_printflow_frontend_api.sh ${{ github.run_number }}
