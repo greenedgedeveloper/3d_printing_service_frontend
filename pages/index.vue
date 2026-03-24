@@ -97,7 +97,7 @@
           <!-- Hero Visual -->
           <div class="relative mt-6 lg:mt-0">
             <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-zinc-900/20 dark:shadow-black/50 ring-1 ring-zinc-200 dark:ring-zinc-800">
-              <img src="https://picsum.photos/seed/3dprint99/900/650" alt="3D Printing" class="w-full h-auto block" referrerPolicy="no-referrer" />
+              <img src="../assets/images/home-image1.jpg" alt="3D Printing" class="w-full h-auto block" referrerPolicy="no-referrer" />
               <!-- Overlay gradient -->
               <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/30 to-transparent pointer-events-none"></div>
             </div>
