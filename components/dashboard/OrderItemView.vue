@@ -3,7 +3,7 @@
         class="bg-white dark:bg-secondary-900 rounded-2xl border border-secondary-200 dark:border-secondary-800
         overflow-hidden group hover:shadow-lg transition-all">
         <div class="aspect-video bg-secondary-100 dark:bg-secondary-800 relative overflow-hidden">
-            <img :src="model.preview_url" :alt="model.productName"
+            <AttachmentPreview :src="model.modelUrl" :alt="model.productName"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform"
                 referrerPolicy="no-referrer" />
         </div>
@@ -46,6 +46,9 @@
 </template>
 
 <script setup lang="ts">
+import { UploadCloud, Search, Filter, Calendar, Database, Box, Eye, MessageSquare, ShoppingCart } from 'lucide-vue-next';
+
+import AttachmentPreview from "~/components/dashboard/AttachmentPreview.vue";
 
 const props = defineProps(['model'])
 const emits = defineEmits(['onRemoveCompleted'])

@@ -74,24 +74,24 @@
 
         <!-- Step 1: Email -->
         <form v-if="currentStep === 1" @submit.prevent="sendEmailVerificationCode" class="space-y-6">
-          <div class="mb-8">
-            <UButton block size="lg" variant="outline" color="secondary" class="rounded-xl font-medium">
-              <template #leading>
-                <img src="https://www.google.com/favicon.ico" class="w-4 h-4" alt="Google" />
-              </template>
-              Continue with Google
-            </UButton>
-          </div>
+<!--          <div class="mb-8">-->
+<!--            <UButton block size="lg" variant="outline" color="secondary" class="rounded-xl font-medium">-->
+<!--              <template #leading>-->
+<!--                <img src="https://www.google.com/favicon.ico" class="w-4 h-4" alt="Google" />-->
+<!--              </template>-->
+<!--              Continue with Google-->
+<!--            </UButton>-->
+<!--          </div>-->
 
-          <div class="relative mb-8">
-            <div class="absolute inset-0 flex items-center">
-              <div class="w-full border-t border-secondary-100 dark:border-secondary-800"></div>
-            </div>
-            <div class="relative flex justify-center text-xs uppercase">
-              <span class="bg-white dark:bg-secondary-900 px-2 text-secondary-400 dark:text-secondary-500">Or use
-                email</span>
-            </div>
-          </div>
+<!--          <div class="relative mb-8">-->
+<!--            <div class="absolute inset-0 flex items-center">-->
+<!--              <div class="w-full border-t border-secondary-100 dark:border-secondary-800"></div>-->
+<!--            </div>-->
+<!--            <div class="relative flex justify-center text-xs uppercase">-->
+<!--              <span class="bg-white dark:bg-secondary-900 px-2 text-secondary-400 dark:text-secondary-500">Or use-->
+<!--                email</span>-->
+<!--            </div>-->
+<!--          </div>-->
 
           <div>
             <label class="block text-sm font-semibold text-secondary-700 dark:text-secondary-300 mb-2">Email Address</label>
@@ -230,6 +230,10 @@
 
 <script setup lang="ts">
 import { Box, Eye, EyeOff, Lock, Globe, Zap, ShieldCheck, ArrowRight } from 'lucide-vue-next';
+
+useHead({
+  title: 'PrintFlow 3D',
+})
 
 const currentStep = ref(1);
 const showPassword = ref(false);

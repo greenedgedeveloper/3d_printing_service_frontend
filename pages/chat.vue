@@ -157,6 +157,10 @@
 <script setup lang="ts">
 import { Box, Info, MoreVertical, Send, Paperclip, ChevronRight, ExternalLink } from 'lucide-vue-next';
 
+useHead({
+  title: 'PrintFlow 3D',
+})
+
 const newMessage = ref('');
 const chatContainer = ref<HTMLElement | null>(null);
 const hints = ['What\'s the status of my order?', 'Can you provide more details on model XYZ?', 'I need help with an upload.', 'What are your support hours?', 'How do I request a quote?'];

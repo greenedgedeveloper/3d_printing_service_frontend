@@ -5,4 +5,7 @@
 </template>
 
 <script setup lang="ts">
+useHead({
+  title: 'PrintFlow 3D',
+})
 </script>

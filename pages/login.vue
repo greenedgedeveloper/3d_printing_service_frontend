@@ -11,7 +11,7 @@
             <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-white">
               <Box class="w-5 h-5" />
             </div>
-            <span class="font-bold text-lg lg:text-xl tracking-tight">PrintFlow Pro</span>
+            <span class="font-bold text-lg lg:text-xl tracking-tight">PrintFlow 3D</span>
           </NuxtLink>
           <div class="mt-12 lg:mt-20">
             <h2 class="text-3xl lg:text-5xl font-bold leading-tight mb-8">
@@ -43,34 +43,34 @@
 
       <!-- Right Side: Form -->
       <div class="md:w-1/2 p-8 lg:p-12">
-        <div class="mb-8 lg:mb-10">
-          <h2 class="text-2xl lg:text-3xl font-bold text-secondary-900 dark:text-white mb-2">Sign In</h2>
-          <p class="text-sm lg:text-base text-secondary-500 dark:text-secondary-400">Enter your credentials to access your 3D print dashboard</p>
-        </div>
+<!--        <div class="mb-8 lg:mb-10">-->
+<!--          <h2 class="text-2xl lg:text-3xl font-bold text-secondary-900 dark:text-white mb-2">Sign In</h2>-->
+<!--          <p class="text-sm lg:text-base text-secondary-500 dark:text-secondary-400">Enter your credentials to access your 3D print dashboard</p>-->
+<!--        </div>-->
 
-        <div class="mb-8">
-          <UButton 
-            block 
-            size="lg" 
-            variant="outline" 
-            color="secondary" 
-            class="rounded-xl font-medium"
-          >
-            <template #leading>
-              <img src="https://www.google.com/favicon.ico" class="w-4 h-4" alt="Google" />
-            </template>
-            Continue with Google
-          </UButton>
-        </div>
+<!--        <div class="mb-8">-->
+<!--          <UButton -->
+<!--            block -->
+<!--            size="lg" -->
+<!--            variant="outline" -->
+<!--            color="secondary" -->
+<!--            class="rounded-xl font-medium"-->
+<!--          >-->
+<!--            <template #leading>-->
+<!--              <img src="https://www.google.com/favicon.ico" class="w-4 h-4" alt="Google" />-->
+<!--            </template>-->
+<!--            Continue with Google-->
+<!--          </UButton>-->
+<!--        </div>-->
 
-        <div class="relative mb-8">
-          <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-secondary-100 dark:border-secondary-800"></div>
-          </div>
-          <div class="relative flex justify-center text-xs uppercase">
-            <span class="bg-white dark:bg-secondary-900 px-2 text-secondary-400 dark:text-secondary-500">Or continue with email</span>
-          </div>
-        </div>
+<!--        <div class="relative mb-8">-->
+<!--          <div class="absolute inset-0 flex items-center">-->
+<!--            <div class="w-full border-t border-secondary-100 dark:border-secondary-800"></div>-->
+<!--          </div>-->
+<!--          <div class="relative flex justify-center text-xs uppercase">-->
+<!--            <span class="bg-white dark:bg-secondary-900 px-2 text-secondary-400 dark:text-secondary-500">Or continue with email</span>-->
+<!--          </div>-->
+<!--        </div>-->
 
         <form @submit.prevent="handleLogin" class="space-y-6">
           <div>
@@ -121,6 +121,10 @@
 
 <script setup lang="ts">
 import { Box, Mail, Lock, ArrowRight, Zap, ShieldCheck } from 'lucide-vue-next';
+
+useHead({
+  title: 'PrintFlow 3D',
+})
 
 const userCookie = useCookie('auth_user');
 if (userCookie.value) {

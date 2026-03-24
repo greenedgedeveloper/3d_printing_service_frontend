@@ -1,122 +1,210 @@
 <template>
-  <div class="w-full h-full relative border-2 border-gray-500 rounded-md group cursor-pointer" @click="openLightbox">
-    <!-- Thumbnail -->
-    <div class="w-full h-full" v-if="isImage">
-      <img class="w-full h-full object-cover rounded-md" :src="atachmentLink" />
-    </div>
-    <div class="w-full h-full flex flex-col gap-1 justify-center items-center" v-else>
-      <v-icon :icon="fileIcon" size="28" class="text-gray-400"></v-icon>
-      <span class="text-xs text-gray-400 uppercase font-mono">{{ fileExtension }}</span>
+  <!-- Thumbnail card -->
+  <div
+      class="group relative w-full h-full rounded-lg border border-neutral-700 bg-neutral-900 overflow-hidden cursor-pointer transition-all duration-200 hover:border-neutral-500 hover:shadow-lg hover:shadow-black/40"
+      @click="openLightbox"
+  >
+    <!-- Image thumbnail -->
+    <img
+        v-if="isImage"
+        :src="attachmentLink"
+        class="w-full h-full object-cover"
+        draggable="false"
+    />
+
+    <!-- Non-image thumbnail -->
+    <div v-else class="w-full h-full flex flex-col items-center justify-center gap-1.5 text-neutral-500">
+      <component :is="fileIcon" :size="28" :stroke-width="1.5" />
+      <span class="text-[10px] font-mono uppercase tracking-widest">{{ fileExtension }}</span>
     </div>
 
-    <!-- Hover overlay -->
-    <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity rounded-md flex items-center justify-center pointer-events-none">
-      <UIcon name="i-lucide-zoom-in" size="28" class="text-white drop-shadow"></UIcon>
+    <!-- Hover zoom hint -->
+    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+      <ZoomIn :size="22" class="text-white drop-shadow" />
     </div>
 
-
-    <UButton v-if="!hideDeleteAction" @click="emits('onRemoveClick')" class="absolute top-0 right-0 bg-transparent">
-      <UIcon  name="i-lucide-trash" class="size-5 text-red-400" ></UIcon>
+    <!-- Delete button -->
+    <UButton
+        v-if="!hideDeleteAction"
+        icon
+        size="xs"
+        variant="ghost"
+        class="absolute top-1 right-1 text-red-400 hover:text-red-300 hover:bg-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+        @click.stop="emit('onRemoveClick')"
+        aria-label="Remove attachment"
+    >
+      <Trash2 :size="14" :stroke-width="1.75" />
     </UButton>
   </div>
 
-  <!-- Lightbox Teleport -->
-  <teleport to="body">
-    <transition name="lightbox">
-      <div
-          v-if="lightboxOpen"
-          class="lightbox-overlay"
-          @click.self="closeLightbox"
-          @keydown.esc="closeLightbox"
-          tabindex="0"
-          ref="overlayRef"
-      >
-        <div class="lightbox-container">
-          <!-- Header -->
-          <div class="lightbox-header">
-            <span class="lightbox-filename">{{ fileName }}</span>
-            <div class="lightbox-actions">
-              <a :href="atachmentLink" target="_blank" download>
-                <v-btn density="compact" flat icon="mdi-download-outline" class="text-gray-300 hover:text-white"></v-btn>
-              </a>
-              <v-btn density="compact" flat icon="mdi-close" @click="closeLightbox" class="text-gray-300 hover:text-white"></v-btn>
-            </div>
-          </div>
+  <!-- Lightbox modal -->
+  <UModal
+      v-model:open="lightboxOpen"
+      fullscreen
+      :ui="{
+      overlay: 'bg-black/90 backdrop-blur-md',
+      content: 'bg-neutral-950 border border-neutral-800 shadow-2xl rounded-xl overflow-hidden',
+      wrapper: 'flex items-center justify-center p-4 sm:p-8',
+    }"
+  >
+    <template #content>
+      <div class="flex flex-col w-[90vw] max-w-5xl max-h-[90vh]">
 
-          <!-- Image Preview -->
-          <div v-if="isImage" class="lightbox-content">
-            <img
-                :src="atachmentLink"
-                class="lightbox-image"
-                :style="imageTransform"
-                @wheel.prevent="onWheel"
-                @mousedown="startDrag"
-            />
-            <!-- Image controls -->
-            <div class="lightbox-image-controls">
-              <v-btn density="compact" flat icon="mdi-magnify-minus-outline" @click="zoom(-0.2)" class="text-gray-300"></v-btn>
-              <span class="text-xs text-gray-400 font-mono w-12 text-center">{{ Math.round(scale * 100) }}%</span>
-              <v-btn density="compact" flat icon="mdi-magnify-plus-outline" @click="zoom(0.2)" class="text-gray-300"></v-btn>
-              <v-btn density="compact" flat icon="mdi-refresh" @click="resetTransform" class="text-gray-300 ml-2"></v-btn>
-            </div>
+        <!-- Header -->
+        <div class="flex items-center justify-between px-4 py-2.5 border-b border-neutral-800 bg-neutral-950 shrink-0">
+          <div class="flex items-center gap-2 min-w-0">
+            <component :is="fileIcon" :size="14" class="text-neutral-500 shrink-0" />
+            <span class="text-xs font-mono text-neutral-400 truncate">{{ fileName }}</span>
           </div>
-
-          <!-- 3D File Preview -->
-          <div v-else-if="is3DFile" class="lightbox-content">
-            <div class="lightbox-3d-placeholder">
-              <v-icon :icon="fileIcon" size="64" class="text-gray-400 mb-4"></v-icon>
-              <p class="text-gray-300 text-sm font-mono uppercase mb-1">{{ fileExtension }} File</p>
-              <p class="text-gray-500 text-xs mb-6">3D preview not available in browser</p>
-              <a :href="atachmentLink" target="_blank" download>
-                <v-btn variant="outlined" class="text-gray-300 border-gray-600 hover:border-white">
-                  <v-icon icon="mdi-download-outline" class="mr-2"></v-icon>
-                  Download File
-                </v-btn>
-              </a>
-            </div>
-          </div>
-
-          <!-- Generic File -->
-          <div v-else class="lightbox-content">
-            <div class="lightbox-3d-placeholder">
-              <v-icon icon="mdi-paperclip" size="64" class="text-gray-400 mb-4"></v-icon>
-              <p class="text-gray-300 text-sm font-mono uppercase mb-6">{{ fileExtension || 'File' }}</p>
-              <a :href="atachmentLink" target="_blank" download>
-                <v-btn variant="outlined" class="text-gray-300 border-gray-600 hover:border-white">
-                  <v-icon icon="mdi-download-outline" class="mr-2"></v-icon>
-                  Download File
-                </v-btn>
-              </a>
-            </div>
+          <div class="flex items-center gap-1 shrink-0 ml-4">
+            <UTooltip text="Download">
+              <UButton
+                  icon
+                  size="xs"
+                  variant="ghost"
+                  class="text-neutral-400 hover:text-white"
+                  :as="'a'"
+                  :href="attachmentLink"
+                  target="_blank"
+                  download
+                  @click.stop
+              >
+                <Download :size="15" />
+              </UButton>
+            </UTooltip>
+            <UTooltip text="Open in new tab">
+              <UButton
+                  icon
+                  size="xs"
+                  variant="ghost"
+                  class="text-neutral-400 hover:text-white"
+                  :as="'a'"
+                  :href="attachmentLink"
+                  target="_blank"
+                  @click.stop
+              >
+                <ExternalLink :size="15" />
+              </UButton>
+            </UTooltip>
+            <div class="w-px h-4 bg-neutral-700 mx-1" />
+            <UButton
+                icon
+                size="xs"
+                variant="ghost"
+                class="text-neutral-400 hover:text-white"
+                @click="closeLightbox"
+            >
+              <X :size="15" />
+            </UButton>
           </div>
         </div>
+
+        <!-- Image viewer -->
+        <div
+            v-if="isImage"
+            class="relative flex-1 overflow-hidden flex items-center justify-center bg-[radial-gradient(ellipse_at_center,_#1f1f1f_0%,_#0a0a0a_100%)]"
+            style="min-height: 300px;"
+            @wheel.prevent="onWheel"
+            @mousedown="startDrag"
+        >
+          <img
+              :src="attachmentLink"
+              class="select-none pointer-events-none max-w-full max-h-full object-contain"
+              :style="imageTransformStyle"
+              draggable="false"
+          />
+
+          <!-- Zoom controls -->
+          <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1 bg-neutral-900/80 border border-neutral-700 rounded-full px-3 py-1 backdrop-blur-sm">
+            <UButton icon size="xs" variant="ghost" class="text-neutral-400 hover:text-white" @click.stop="zoomBy(-0.2)">
+              <ZoomOut :size="14" />
+            </UButton>
+            <span class="text-[11px] font-mono text-neutral-400 w-10 text-center tabular-nums">
+              {{ Math.round(scale * 100) }}%
+            </span>
+            <UButton icon size="xs" variant="ghost" class="text-neutral-400 hover:text-white" @click.stop="zoomBy(0.2)">
+              <ZoomIn :size="14" />
+            </UButton>
+            <div class="w-px h-3 bg-neutral-700 mx-0.5" />
+            <UButton icon size="xs" variant="ghost" class="text-neutral-400 hover:text-white" @click.stop="resetTransform">
+              <RotateCcw :size="13" />
+            </UButton>
+          </div>
+        </div>
+
+        <!-- 3D / generic file viewer -->
+        <div
+            v-else
+            class="flex-1 flex flex-col items-center justify-center gap-4 bg-[radial-gradient(ellipse_at_center,_#1a1a1a_0%,_#0a0a0a_100%)] p-12"
+            style="min-height: 300px;"
+        >
+          <div class="w-20 h-20 rounded-2xl bg-neutral-800 border border-neutral-700 flex items-center justify-center">
+            <component :is="fileIcon" :size="36" class="text-neutral-400" :stroke-width="1.25" />
+          </div>
+          <div class="text-center">
+            <p class="text-sm font-mono text-neutral-300 uppercase tracking-wider">{{ fileExtension }} File</p>
+            <p v-if="is3DFile" class="text-xs text-neutral-600 mt-1">3D preview unavailable in browser</p>
+          </div>
+          <UButton
+              variant="outline"
+              size="sm"
+              class="text-neutral-300 border-neutral-600 hover:border-neutral-400 mt-2"
+              :as="'a'"
+              :href="attachmentLink"
+              target="_blank"
+              download
+          >
+            <Download :size="14" class="mr-1.5" />
+            Download File
+          </UButton>
+        </div>
+
       </div>
-    </transition>
-  </teleport>
+    </template>
+  </UModal>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, nextTick, onUnmounted } from 'vue'
+import { ref, computed, onUnmounted } from 'vue'
+import {
+  Paperclip,
+  Box,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
+  Download,
+  ExternalLink,
+  X,
+  Trash2,
+  Image as ImageIcon,
+} from 'lucide-vue-next'
 
-const props = defineProps(['atachmentLink', 'hideDeleteAction'])
-const emits = defineEmits(['onRemoveClick'])
+// ── Props & emits ────────────────────────────────────────────────────────────
 
-// ── File type detection ──────────────────────────────────────────────────────
+const props = defineProps<{
+  attachmentLink?: string
+  hideDeleteAction?: boolean
+}>()
+
+const emit = defineEmits<{
+  onRemoveClick: []
+}>()
+
+// ── File type helpers ────────────────────────────────────────────────────────
 
 const fileExtension = computed(() => {
-  if (!props.atachmentLink) return ''
-  const parts = `${props.atachmentLink}`.split('.')
+  if (!props.attachmentLink) return ''
+  const parts = props.attachmentLink.split('.') as any
   return parts.length > 1 ? parts[parts.length - 1].toLowerCase() : ''
 })
 
 const fileName = computed(() => {
-  if (!props.atachmentLink) return ''
-  const parts = `${props.atachmentLink}`.split('/')
-  return parts[parts.length - 1]
+  if (!props.attachmentLink) return ''
+  return props.attachmentLink.split('/').pop() ?? props.attachmentLink
 })
 
 const isImage = computed(() =>
-    ['jpg', 'jpeg', 'png', 'svg', 'gif', 'webp', 'bmp'].includes(fileExtension.value)
+    ['jpg', 'jpeg', 'png', 'svg', 'gif', 'webp', 'bmp', 'avif'].includes(fileExtension.value)
 )
 
 const is3DFile = computed(() =>
@@ -124,55 +212,45 @@ const is3DFile = computed(() =>
 )
 
 const fileIcon = computed(() => {
-  switch (fileExtension.value) {
-    case 'stl':
-    case 'obj':
-    case '3mf':
-    case 'glb':
-    case 'gltf':
-      return 'mdi-cube-outline'
-    case 'pdf':
-      return 'mdi-file-pdf-box'
-    default:
-      return 'mdi-paperclip'
-  }
+  if (isImage.value) return ImageIcon
+  if (is3DFile.value) return Box
+  return Paperclip
 })
 
-// ── Lightbox state ───────────────────────────────────────────────────────────
+// ── Lightbox ─────────────────────────────────────────────────────────────────
 
 const lightboxOpen = ref(false)
-const overlayRef = ref<HTMLElement | null>(null)
 
 function openLightbox() {
   lightboxOpen.value = true
   resetTransform()
-  nextTick(() => overlayRef.value?.focus())
 }
 
 function closeLightbox() {
   lightboxOpen.value = false
 }
 
-// ── Image pan & zoom ─────────────────────────────────────────────────────────
+// ── Pan & zoom ───────────────────────────────────────────────────────────────
 
 const scale = ref(1)
 const translateX = ref(0)
 const translateY = ref(0)
 const isDragging = ref(false)
-const dragStart = ref({ x: 0, y: 0 })
+const dragOrigin = ref({ x: 0, y: 0 })
 
-const imageTransform = computed(() => ({
+const imageTransformStyle = computed(() => ({
   transform: `translate(${translateX.value}px, ${translateY.value}px) scale(${scale.value})`,
   cursor: isDragging.value ? 'grabbing' : 'grab',
-  transition: isDragging.value ? 'none' : 'transform 0.15s ease',
+  transition: isDragging.value ? 'none' : 'transform 0.12s ease',
+  willChange: 'transform',
 }))
 
-function zoom(delta: number) {
-  scale.value = Math.min(5, Math.max(0.2, scale.value + delta))
+function zoomBy(delta: number) {
+  scale.value = Math.min(6, Math.max(0.15, scale.value + delta))
 }
 
 function onWheel(e: WheelEvent) {
-  zoom(e.deltaY < 0 ? 0.15 : -0.15)
+  zoomBy(e.deltaY < 0 ? 0.15 : -0.15)
 }
 
 function resetTransform() {
@@ -183,15 +261,18 @@ function resetTransform() {
 
 function startDrag(e: MouseEvent) {
   isDragging.value = true
-  dragStart.value = { x: e.clientX - translateX.value, y: e.clientY - translateY.value }
+  dragOrigin.value = {
+    x: e.clientX - translateX.value,
+    y: e.clientY - translateY.value,
+  }
   window.addEventListener('mousemove', onDrag)
   window.addEventListener('mouseup', stopDrag)
 }
 
 function onDrag(e: MouseEvent) {
   if (!isDragging.value) return
-  translateX.value = e.clientX - dragStart.value.x
-  translateY.value = e.clientY - dragStart.value.y
+  translateX.value = e.clientX - dragOrigin.value.x
+  translateY.value = e.clientY - dragOrigin.value.y
 }
 
 function stopDrag() {
@@ -205,131 +286,3 @@ onUnmounted(() => {
   window.removeEventListener('mouseup', stopDrag)
 })
 </script>
-
-<style scoped>
-/* Lightbox overlay */
-.lightbox-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: rgba(0, 0, 0, 0.88);
-  backdrop-filter: blur(6px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  outline: none;
-}
-
-/* Lightbox container */
-.lightbox-container {
-  display: flex;
-  flex-direction: column;
-  width: 90vw;
-  max-width: 1100px;
-  max-height: 90vh;
-  background: #1a1a1a;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.7);
-}
-
-/* Header */
-.lightbox-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 14px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: #111;
-  flex-shrink: 0;
-}
-
-.lightbox-filename {
-  font-family: 'JetBrains Mono', 'Fira Mono', monospace;
-  font-size: 12px;
-  color: #aaa;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 60%;
-}
-
-.lightbox-actions {
-  display: flex;
-  gap: 4px;
-}
-
-/* Content area */
-.lightbox-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-  min-height: 300px;
-}
-
-/* Image */
-.lightbox-image {
-  max-width: 100%;
-  max-height: calc(90vh - 140px);
-  object-fit: contain;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-
-/* Image zoom controls */
-.lightbox-image-controls {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  padding: 4px 10px;
-  backdrop-filter: blur(8px);
-}
-
-/* 3D placeholder */
-.lightbox-3d-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 48px;
-  text-align: center;
-}
-
-/* Transition */
-.lightbox-enter-active,
-.lightbox-leave-active {
-  transition: opacity 0.2s ease;
-}
-
-.lightbox-enter-active .lightbox-container,
-.lightbox-leave-active .lightbox-container {
-  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
-}
-
-.lightbox-enter-from,
-.lightbox-leave-to {
-  opacity: 0;
-}
-
-.lightbox-enter-from .lightbox-container {
-  transform: scale(0.92);
-  opacity: 0;
-}
-
-.lightbox-leave-to .lightbox-container {
-  transform: scale(0.95);
-  opacity: 0;
-}
-</style>

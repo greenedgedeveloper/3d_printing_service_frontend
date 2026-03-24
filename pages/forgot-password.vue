@@ -150,6 +150,10 @@
 <script setup lang="ts">
 import { KeyRound, Mail, Lock, Eye, EyeOff, ArrowLeft } from 'lucide-vue-next';
 
+useHead({
+  title: 'PrintFlow 3D',
+})
+
 const currentStep = ref(1);
 const loading = ref(false);
 const showPassword = ref(false);

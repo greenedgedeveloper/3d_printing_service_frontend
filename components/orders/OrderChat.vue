@@ -226,10 +226,19 @@ const scrollToBottom = () => {
   });
 };
 
+let getMessagesInterval = 0;
 onMounted(async() => {
   await getOrderMessages();
   scrollToBottom();
+
+  getMessagesInterval = window.setInterval(async ()=>{
+    await getOrderMessages(1, true);
+  }, 5000)
 });
+
+onUnmounted(()=>{
+  clearInterval(getMessagesInterval)
+})
 
 const handleFileSelect = (e: Event) => {
   const files = (e.target as HTMLInputElement).files;

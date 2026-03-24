@@ -138,6 +138,10 @@
 <script setup lang="ts">
 import { CreditCard, CheckCircle2 } from 'lucide-vue-next';
 
+useHead({
+  title: 'PrintFlow 3D',
+})
+
 const paymentMethod = ref('card');
 
 const placeOrder = () => {

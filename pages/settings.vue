@@ -147,6 +147,10 @@ import { Camera, Lock, Eye, EyeOff } from 'lucide-vue-next';
 
 const changePasswordLoading = ref(false);
 
+useHead({
+  title: 'PrintFlow 3D',
+})
+
 const passwords = reactive({
   current: '',
   new: '',
