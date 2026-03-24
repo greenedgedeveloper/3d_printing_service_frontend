@@ -34,4 +34,4 @@ jobs:
           password: ${{ secrets.DO_PASSWORD }}
           script: |
             cd ~/container_configs
-            ./restart_printflow_frontend_api.sh ${{ github.run_number }}
+            ./restart_printflow_frontend.sh ${{ github.run_number }}
