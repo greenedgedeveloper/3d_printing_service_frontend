@@ -51,7 +51,7 @@
                         class="flex flex-wrap justify-center items-center gap-4 mb-8">
                         <ModelPreview :model-url="currentUploadFileUrl" @reupload="currentUploadFileUrl = ''">
                         </ModelPreview>
-                        <CreateOrderItem @on-saved="() => { getPendingOrderItems(); currentUploadFileUrl = '' }">
+                        <CreateOrderItem :model-url="currentUploadFileUrl" @on-saved="() => { getPendingOrderItems(); currentUploadFileUrl = '' }">
                         </CreateOrderItem>
                     </div>
                 </div>
@@ -142,9 +142,7 @@ const handleFileSelect = (e: Event) => {
 const getPendingOrderItems = async () => {
     try {
         getPendingOrderItemsLoading.value = true;
-
         const response = await $fetch("/api/order/pending-order-items") as any;
-
 
         console.log({ response })
         if (response.isSuccessful) {
@@ -153,7 +151,6 @@ const getPendingOrderItems = async () => {
 
     } catch (error: any) {
         console.log(error)
-        
     } finally {
         getPendingOrderItemsLoading.value = false;
     }
@@ -238,6 +235,7 @@ const sendOrderRequestAction = async () => {
                 description: 'Order request has been sent successfully. We will get back to you',
                 color: 'success'
             })
+            navigateTo("/orders")
         }
     } catch(e: any) {
         

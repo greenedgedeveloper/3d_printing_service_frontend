@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps()
+const props = defineProps(["modelUrl"])
 const emits = defineEmits(['onSaved'])
 
 const addToOrderLoading = ref(false);
@@ -39,7 +39,7 @@ const addToOrder = async () => {
     try {
         addToOrderLoading.value = true;
         const payload = {
-            ...orderItemEdit
+            ...orderItemEdit, modelUrl: props.modelUrl,
         }
 
         const response = await $fetch('/api/order/save-order-item', {

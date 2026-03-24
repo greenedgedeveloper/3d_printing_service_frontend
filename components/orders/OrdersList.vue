@@ -183,6 +183,7 @@ onMounted(async () => {
 });
 
 const truncate = (text: string, maxLength: number) => {
+  if (!text) return text;
   if (text.length <= maxLength) {
     return text;
   }

@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="text-center">
-            <UButton :loading="sendRequestOrderLoading" :disabled="sendRequestOrderLoading" size="xl" class="w-auto px-8 rounded-xl font-bold" @click="sendOrderRequestAction">
+            <UButton :loading="sendRequestOrderLoading" :disabled="sendRequestOrderLoading || !orderInstruction" size="xl" class="w-auto px-8 rounded-xl font-bold" @click="sendOrderRequestAction">
                    Send Request
                 </UButton>
         </div>
@@ -130,6 +130,14 @@ function fileToBase64(file: File): Promise<string> {
  */
 
 const sendOrderRequestAction = async () => {
+  if(!orderInstruction.value.trim()){
+    toast.add({
+      title: "Please enter an instruction",
+      description: "Please enter an instruction before sending request",
+      color: 'warning'
+    })
+    return;
+  }
     try {
         sendRequestOrderLoading.value = true;
 
@@ -154,6 +162,7 @@ const sendOrderRequestAction = async () => {
 
             attachmentList.value = [];
             orderInstruction.value = ''
+            navigateTo("/orders")
         }
     } catch(e: any) {
         

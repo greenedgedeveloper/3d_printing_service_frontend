@@ -20,6 +20,11 @@
                 <span class="text-xs font-medium text-secondary-700 dark:text-secondary-300">Material: {{
                     model.material }}</span>
             </div>
+          <div class="flex items-center gap-2 mb-6 p-2 bg-secondary-50 dark:bg-secondary-800 rounded-lg">
+            <Box class="w-4 h-4 text-primary-600 dark:text-primary-400" />
+            <span class="text-xs font-medium text-secondary-700 dark:text-secondary-300">Color: {{
+                model.color }}</span>
+          </div>
             <div class="text-center">
                 <!-- <UButton variant="outline" color="secondary" size="xs"
                                 class="rounded-lg font-bold justify-center" icon="i-lucide-pen"
