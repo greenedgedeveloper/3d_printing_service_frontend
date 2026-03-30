@@ -3,7 +3,7 @@
         class="bg-white dark:bg-secondary-900 rounded-2xl border border-secondary-200 dark:border-secondary-800
         overflow-hidden group hover:shadow-lg transition-all">
         <div class="aspect-video bg-secondary-100 dark:bg-secondary-800 relative overflow-hidden">
-            <AttachmentPreview :src="model.modelUrl" :alt="model.productName"
+            <img :src="model.preview_url" :alt="model.productName"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform"
                 referrerPolicy="no-referrer" />
         </div>
@@ -20,11 +20,6 @@
                 <span class="text-xs font-medium text-secondary-700 dark:text-secondary-300">Material: {{
                     model.material }}</span>
             </div>
-          <div class="flex items-center gap-2 mb-6 p-2 bg-secondary-50 dark:bg-secondary-800 rounded-lg">
-            <Box class="w-4 h-4 text-primary-600 dark:text-primary-400" />
-            <span class="text-xs font-medium text-secondary-700 dark:text-secondary-300">Color: {{
-                model.color }}</span>
-          </div>
             <div class="text-center">
                 <!-- <UButton variant="outline" color="secondary" size="xs"
                                 class="rounded-lg font-bold justify-center" icon="i-lucide-pen"
@@ -46,9 +41,6 @@
 </template>
 
 <script setup lang="ts">
-import { UploadCloud, Search, Filter, Calendar, Database, Box, Eye, MessageSquare, ShoppingCart } from 'lucide-vue-next';
-
-import AttachmentPreview from "~/components/dashboard/AttachmentPreview.vue";
 
 const props = defineProps(['model'])
 const emits = defineEmits(['onRemoveCompleted'])
@@ -63,9 +55,9 @@ async function removeAction(id: number) {
         const response = await $fetch('/api/order/remove-order-item', {
             method:'POST',
             body: {id }
-        })
-        if(response.isSuccessful = true) {
-            emits("onRemoveCompleted")
+        }) as any
+        if(response.isSuccessful == true) {
+            emits("onRemoveCompleted") 
             // await getPendingOrderItems();
         }
     } catch(e: any) {
