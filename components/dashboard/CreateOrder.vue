@@ -2,7 +2,7 @@
 
 <template>
  <div>
-    <div class="bg-white dark:bg-gray-900 p-4 rounded-lg my-4">
+    <div class="bg-white dark:bg-secondary-900 p-4 rounded-lg my-4">
         <div class="">
             <div @click="()=>{showDesignService=!showDesignService}" class="flex items-center cursor-pointer">
                 <UIcon :name="showDesignService ? `i-lucide-chevron-down` : 'i-lucide-chevron-up'" class="size-5"></UIcon>
@@ -13,7 +13,7 @@
             <CreateDesignOrder ></CreateDesignOrder>
         </div>
     </div>
-    <div class="bg-white dark:bg-gray-900 p-4 rounded-lg my-4">
+    <div class="bg-white dark:bg-secondary-900 p-4 rounded-lg my-4">
         <div class="">
             <div @click="()=>{show3DPrintingService=!show3DPrintingService}" class="flex items-center cursor-pointer">
                 <UIcon :name="show3DPrintingService ? `i-lucide-chevron-down` : 'i-lucide-chevron-up'" class="size-5"></UIcon>

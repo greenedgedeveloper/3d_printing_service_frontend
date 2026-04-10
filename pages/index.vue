@@ -4,10 +4,10 @@
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 lg:px-10 py-4 border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl">
       <div class="flex items-center gap-2.5">
-        <div class="w-8 h-8 bg-blue-600 rounded-md flex items-center justify-center text-white shadow-lg shadow-blue-600/30">
+        <div class="w-8 h-8 bg-primary-600 rounded-md flex items-center justify-center text-white shadow-lg shadow-primary-600/30">
           <Box class="w-4.5 h-4.5" />
         </div>
-        <span class="font-black text-lg tracking-tighter text-zinc-900 dark:text-white">PrintFlow<span class="text-blue-600">3D</span></span>
+        <span class="font-black text-lg tracking-tighter text-zinc-900 dark:text-white">PrintFlow<span class="text-primary-600">3D</span></span>
       </div>
       <div class="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-500 dark:text-zinc-400">
         <a href="#features" class="hover:text-zinc-900 dark:hover:text-white transition-colors">Features</a>
@@ -15,7 +15,7 @@
 <!--        <a href="#pricing" class="hover:text-zinc-900 dark:hover:text-white transition-colors">Pricing</a>-->
         <NuxtLink to="/login" class="hover:text-zinc-900 dark:hover:text-white transition-colors">Login</NuxtLink>
         <ColorModePicker />
-        <UButton to="/register" color="primary" variant="solid" size="sm" class="rounded-lg px-5 font-semibold bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-600/20">
+        <UButton to="/register" color="primary" variant="solid" size="sm" class="rounded-lg px-5 font-semibold bg-primary-600 hover:bg-primary-500 shadow-lg shadow-primary-600/20">
           Get Started
         </UButton>
       </div>
@@ -34,15 +34,15 @@
       <a href="#materials" class="block text-base font-semibold text-zinc-700 dark:text-zinc-300">Materials</a>
 <!--      <a href="#pricing" class="block text-base font-semibold text-zinc-700 dark:text-zinc-300">Pricing</a>-->
       <NuxtLink to="/login" class="block text-base font-semibold text-zinc-700 dark:text-zinc-300">Login</NuxtLink>
-      <UButton to="/register" block size="lg" class="rounded-xl font-bold bg-blue-600">Get Started</UButton>
+      <UButton to="/register" block size="lg" class="rounded-xl font-bold bg-primary-600">Get Started</UButton>
     </div>
 
     <!-- Hero -->
     <header class="relative pt-32 pb-16 lg:pt-40 lg:pb-28 overflow-hidden">
       <!-- Background decorations -->
       <div class="absolute inset-0 pointer-events-none overflow-hidden">
-        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
-        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-600/5 dark:bg-blue-600/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-500/5 dark:bg-primary-500/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary-600/5 dark:bg-primary-600/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
         <!-- Dotted grid pattern -->
         <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.06]" style="background-image: radial-gradient(circle, #3b82f6 1px, transparent 1px); background-size: 40px 40px;"></div>
       </div>
@@ -50,8 +50,8 @@
       <div class="relative max-w-7xl mx-auto px-6 lg:px-10">
         <!-- Tag line -->
 <!--        <div class="flex justify-center md:justify-start mb-8">-->
-<!--          <div class="inline-flex items-center gap-2.5 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full border border-blue-200 dark:border-blue-800">-->
-<!--            <span class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>-->
+<!--          <div class="inline-flex items-center gap-2.5 bg-primary-50 dark:bg-primary-950/50 text-primary-600 dark:text-primary-400 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full border border-primary-200 dark:border-primary-800">-->
+<!--            <span class="w-1.5 h-1.5 bg-primary-500 rounded-full animate-pulse"></span>-->
 <!--            Now with Live Print Tracking-->
 <!--          </div>-->
 <!--        </div>-->
@@ -60,7 +60,7 @@
           <div class="text-center lg:text-left">
             <h1 class="text-5xl lg:text-7xl font-black leading-[0.95] tracking-tighter text-zinc-900 dark:text-white mb-8">
               Your Designs,<br />
-              <span class="text-blue-600">Printed</span><br />
+              <span class="text-primary-600">Printed</span><br />
               <span class="text-zinc-400 dark:text-zinc-600">Perfectly.</span>
             </h1>
             <p class="text-lg text-zinc-500 dark:text-zinc-400 mb-10 leading-relaxed max-w-lg mx-auto lg:mx-0">
@@ -70,7 +70,7 @@
               <UButton
                   to="/register"
                   size="xl"
-                  class="rounded-xl font-bold bg-blue-600 hover:bg-blue-500 shadow-xl shadow-blue-600/25 px-8"
+                  class="rounded-xl font-bold bg-primary-600 hover:bg-primary-500 shadow-xl shadow-primary-600/25 px-8"
                   trailing-icon="i-lucide-arrow-right"
               >
                 Start Your First Print
@@ -113,7 +113,7 @@
 <!--              </div>-->
 <!--            </div>-->
             <!-- File format badge -->
-            <div class="absolute -top-4 -right-4 bg-blue-600 text-white text-xs font-black px-3 py-2 rounded-xl shadow-lg shadow-blue-600/30 tracking-wider uppercase">
+            <div class="absolute -top-4 -right-4 bg-primary-600 text-white text-xs font-black px-3 py-2 rounded-xl shadow-lg shadow-primary-600/30 tracking-wider uppercase">
               STL · OBJ · 3MF
             </div>
           </div>
@@ -125,7 +125,7 @@
     <section class="py-16 lg:py-24 bg-zinc-50 dark:bg-zinc-900/40 border-y border-zinc-200 dark:border-zinc-800">
       <div class="max-w-7xl mx-auto px-6 lg:px-10">
         <div class="text-center mb-12">
-          <p class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-3">The Process</p>
+          <p class="text-xs font-bold uppercase tracking-widest text-primary-600 mb-3">The Process</p>
           <h2 class="text-3xl lg:text-4xl font-black tracking-tight text-zinc-900 dark:text-white">Three steps to your print</h2>
         </div>
         <div class="grid md:grid-cols-3 gap-6 lg:gap-8 relative">
@@ -148,23 +148,23 @@
       <div class="max-w-7xl mx-auto px-6 lg:px-10">
         <div class="grid lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 items-start">
           <div class="lg:sticky lg:top-32">
-            <p class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-4">Capabilities</p>
+            <p class="text-xs font-bold uppercase tracking-widest text-primary-600 mb-4">Capabilities</p>
             <h2 class="text-3xl lg:text-5xl font-black tracking-tight leading-tight text-zinc-900 dark:text-white mb-6">
               Built for precision at every step.
             </h2>
             <p class="text-zinc-500 dark:text-zinc-400 text-base leading-relaxed mb-8">
               PrintFlow 3D is engineered around the entire 3D printing workflow — from the first file upload to final delivery.
             </p>
-            <UButton to="/register" size="lg" class="rounded-xl font-bold bg-blue-600 hover:bg-blue-500 shadow-xl shadow-blue-600/20" trailing-icon="i-lucide-arrow-right">
+            <UButton to="/register" size="lg" class="rounded-xl font-bold bg-primary-600 hover:bg-primary-500 shadow-xl shadow-primary-600/20" trailing-icon="i-lucide-arrow-right">
               Start Free Today
             </UButton>
           </div>
           <div class="grid sm:grid-cols-2 gap-4 lg:gap-5">
             <div v-for="(feat, i) in features" :key="feat.title"
-                 class="group bg-zinc-50 dark:bg-zinc-900 hover:bg-white dark:hover:bg-zinc-800 p-7 rounded-2xl ring-1 ring-zinc-200 dark:ring-zinc-800 hover:ring-blue-200 dark:hover:ring-blue-800 hover:shadow-lg hover:shadow-zinc-100 dark:hover:shadow-black/30 transition-all duration-300 hover:-translate-y-0.5"
+                 class="group bg-zinc-50 dark:bg-zinc-900 hover:bg-white dark:hover:bg-zinc-800 p-7 rounded-2xl ring-1 ring-zinc-200 dark:ring-zinc-800 hover:ring-primary-200 dark:hover:ring-primary-800 hover:shadow-lg hover:shadow-zinc-100 dark:hover:shadow-black/30 transition-all duration-300 hover:-translate-y-0.5"
                  :class="i === 0 ? 'sm:col-span-2' : ''"
             >
-              <div class="w-11 h-11 bg-blue-600/10 dark:bg-blue-600/20 text-blue-600 dark:text-blue-400 rounded-xl flex items-center justify-center mb-5 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+              <div class="w-11 h-11 bg-primary-600/10 dark:bg-primary-600/20 text-primary-600 dark:text-primary-400 rounded-xl flex items-center justify-center mb-5 group-hover:bg-primary-600 group-hover:text-white transition-all duration-300">
                 <component :is="feat.icon" class="w-5 h-5" />
               </div>
               <h3 class="font-black text-zinc-900 dark:text-white text-base mb-2">{{ feat.title }}</h3>
@@ -180,12 +180,12 @@
       <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: radial-gradient(circle, #60a5fa 1px, transparent 1px); background-size: 32px 32px;"></div>
       <div class="relative max-w-7xl mx-auto px-6 lg:px-10">
         <div class="text-center mb-12 lg:mb-16">
-          <p class="text-xs font-bold uppercase tracking-widest text-blue-400 mb-3">Materials</p>
+          <p class="text-xs font-bold uppercase tracking-widest text-primary-400 mb-3">Materials</p>
           <h2 class="text-3xl lg:text-4xl font-black tracking-tight text-white mb-4">Every material for every application.</h2>
           <p class="text-zinc-400 text-base max-w-xl mx-auto">From rapid prototypes to structural end-use parts, we have the right material for your project.</p>
         </div>
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div v-for="mat in materials" :key="mat.name" class="bg-white/5 hover:bg-white/10 border border-white/10 hover:border-blue-500/50 rounded-2xl p-6 transition-all duration-300 group cursor-default">
+          <div v-for="mat in materials" :key="mat.name" class="bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary-500/50 rounded-2xl p-6 transition-all duration-300 group cursor-default">
             <div class="text-3xl mb-4">{{ mat.emoji }}</div>
             <h3 class="font-black text-white text-base mb-1">{{ mat.name }}</h3>
             <p class="text-xs text-zinc-500 font-mono mb-3">{{ mat.abbr }}</p>
@@ -202,23 +202,23 @@
 <!--    <section id="pricing" class="py-16 lg:py-28">-->
 <!--      <div class="max-w-7xl mx-auto px-6 lg:px-10">-->
 <!--        <div class="text-center mb-12 lg:mb-16">-->
-<!--          <p class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-3">Pricing</p>-->
+<!--          <p class="text-xs font-bold uppercase tracking-widest text-primary-600 mb-3">Pricing</p>-->
 <!--          <h2 class="text-3xl lg:text-4xl font-black tracking-tight text-zinc-900 dark:text-white mb-4">Transparent pricing, no surprises.</h2>-->
 <!--          <p class="text-zinc-500 dark:text-zinc-400 max-w-lg mx-auto">Pay only for what you print. Instant quotes for standard jobs, custom quotes for complex projects.</p>-->
 <!--        </div>-->
 <!--        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">-->
 <!--          <div v-for="(example, i) in examples" :key="example.name"-->
 <!--               class="relative bg-white dark:bg-zinc-900 rounded-2xl p-7 ring-1 ring-zinc-200 dark:ring-zinc-800 hover:shadow-xl dark:hover:shadow-black/30 transition-all hover:-translate-y-1 duration-300"-->
-<!--               :class="i === 2 ? 'ring-2 ring-blue-500 shadow-xl shadow-blue-600/10' : ''"-->
+<!--               :class="i === 2 ? 'ring-2 ring-primary-500 shadow-xl shadow-primary-600/10' : ''"-->
 <!--          >-->
-<!--            <div v-if="i === 2" class="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Most Popular</div>-->
+<!--            <div v-if="i === 2" class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Most Popular</div>-->
 <!--            <div class="text-2xl font-black text-zinc-900 dark:text-white mb-1">{{ example.price }}</div>-->
 <!--            <div class="font-bold text-sm text-zinc-700 dark:text-zinc-300 mb-2">{{ example.name }}</div>-->
 <!--            <p class="text-xs text-zinc-400 dark:text-zinc-500 leading-snug">{{ example.desc }}</p>-->
 <!--          </div>-->
 <!--        </div>-->
 <!--        <div class="mt-10 text-center">-->
-<!--          <UButton to="/register" size="xl" class="rounded-xl font-bold bg-blue-600 hover:bg-blue-500 shadow-xl shadow-blue-600/20 px-10" trailing-icon="i-lucide-arrow-right">-->
+<!--          <UButton to="/register" size="xl" class="rounded-xl font-bold bg-primary-600 hover:bg-primary-500 shadow-xl shadow-primary-600/20 px-10" trailing-icon="i-lucide-arrow-right">-->
 <!--            Get an Instant Quote-->
 <!--          </UButton>-->
 <!--        </div>-->
@@ -250,15 +250,15 @@
     <!-- CTA Banner -->
     <section class="py-16 lg:py-24">
       <div class="max-w-7xl mx-auto px-6 lg:px-10">
-        <div class="bg-blue-600 rounded-3xl p-10 lg:p-16 text-center relative overflow-hidden">
+        <div class="bg-primary-600 rounded-3xl p-10 lg:p-16 text-center relative overflow-hidden">
           <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 28px 28px;"></div>
           <div class="relative">
             <h2 class="text-3xl lg:text-5xl font-black text-white tracking-tight leading-tight mb-4">
               Ready to bring your<br class="hidden lg:block" /> designs to life?
             </h2>
-            <p class="text-blue-100 text-lg mb-10 max-w-xl mx-auto">Upload your first model in under a minute. No subscription, no setup fees.</p>
+            <p class="text-primary-100 text-lg mb-10 max-w-xl mx-auto">Upload your first model in under a minute. No subscription, no setup fees.</p>
             <div class="flex flex-col sm:flex-row gap-3 justify-center">
-              <UButton to="/register" size="xl" class="rounded-xl font-bold bg-white text-blue-600 hover:bg-blue-50 shadow-2xl px-10" trailing-icon="i-lucide-arrow-right">
+              <UButton to="/register" size="xl" class="rounded-xl font-bold bg-white text-primary-600 hover:bg-primary-50 shadow-2xl px-10" trailing-icon="i-lucide-arrow-right">
                 Upload Your Model
               </UButton>
               <UButton to="/login" size="xl" variant="ghost" class="rounded-xl font-semibold text-white hover:bg-white/10 border border-white/30 px-10">
@@ -275,10 +275,10 @@
       <div class="max-w-7xl mx-auto px-6 lg:px-10 grid sm:grid-cols-2 md:grid-cols-4 gap-10 lg:gap-16">
         <div class="col-span-1 sm:col-span-2 md:col-span-1">
           <div class="flex items-center gap-2.5 mb-5">
-            <div class="w-8 h-8 bg-blue-600 rounded-md flex items-center justify-center text-white shadow-lg shadow-blue-600/30">
+            <div class="w-8 h-8 bg-primary-600 rounded-md flex items-center justify-center text-white shadow-lg shadow-primary-600/30">
               <Box class="w-4.5 h-4.5" />
             </div>
-            <span class="font-black text-lg tracking-tighter">PrintFlow<span class="text-blue-500">3D</span></span>
+            <span class="font-black text-lg tracking-tighter">PrintFlow<span class="text-primary-500">3D</span></span>
           </div>
           <p class="text-sm text-zinc-500 mb-6 leading-relaxed">High-precision 3D printing services for engineers, designers, and creators.</p>
           <div class="flex gap-3">
@@ -344,7 +344,7 @@ const stats = [
 ];
 
 const steps = [
-  { icon: UploadCloud, title: 'Upload Your Model', desc: 'Drag and drop your STL, OBJ, or 3MF file. Our system auto-checks for printability.', color: 'bg-blue-600 shadow-blue-600/30' },
+  { icon: UploadCloud, title: 'Upload Your Model', desc: 'Drag and drop your STL, OBJ, or 3MF file. Our system auto-checks for printability.', color: 'bg-primary-600 shadow-primary-600/30' },
   { icon: Eye, title: 'Preview & Configure', desc: 'Inspect your 3D model in an interactive viewer. Select material, finish, and quantity.', color: 'bg-violet-600 shadow-violet-600/30' },
   { icon: Truck, title: 'We Print & Deliver', desc: 'We handle manufacturing and quality control. Your finished part ships to your door.', color: 'bg-emerald-600 shadow-emerald-600/30' },
 ];
@@ -374,7 +374,7 @@ const examples = [
 ];
 
 const reviews = [
-  { name: 'Sarah K.', role: 'Product Designer', text: 'The 3D preview alone saved me two failed prints. I could see the wall thickness issues immediately and fix them before ordering.', color: 'from-blue-500 to-violet-600' },
+  { name: 'Sarah K.', role: 'Product Designer', text: 'The 3D preview alone saved me two failed prints. I could see the wall thickness issues immediately and fix them before ordering.', color: 'from-primary-500 to-violet-600' },
   { name: 'Marcus T.', role: 'Mechanical Engineer', text: "Turnaround is genuinely 72 hours. I've ordered 12 times now and every single part has been dimensionally accurate within tolerance.", color: 'from-emerald-500 to-teal-600' },
   { name: 'Lena O.', role: 'Industrial Designer', text: 'The finishing options are a game-changer. Getting a painted, presentation-ready prototype this fast and this affordable is unprecedented.', color: 'from-orange-500 to-rose-500' },
 ];
