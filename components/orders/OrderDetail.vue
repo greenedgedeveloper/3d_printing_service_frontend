@@ -21,7 +21,7 @@
         </div>
 
         <div class="max-w-6xl mx-auto h-[calc(100vh-8rem)] lg:h-[calc(100vh-12rem)] flex flex-col lg:flex-row gap-6 lg:gap-8 transition-colors duration-300">
-         <OrderChat :order="order"></OrderChat>
+         <OrderChat :order="order" @payment-completed="getOrderById"></OrderChat>
           <!-- Context Sidebar -->
           <div class="hidden lg:block lg:w-80 space-y-6">
             <OrderSideDetail :order="order" ></OrderSideDetail>

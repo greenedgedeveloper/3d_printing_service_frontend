@@ -60,6 +60,13 @@
               {{ hint }}
             </UButton>
           </div>
+
+          <div v-if="order.totalAmount > 0 && !order.isPaid "
+               class="flex justify-between gap-4 mb-4 scrollbar-hide bg-secondary/20 rounded-2xl p-4 flex-wrap">
+            <div class="text-sm">Congrats! Your order has been approved. Kindly pay now to start the process.</div>
+            <PaymentAction :order="order" @completed="emits('paymentCompleted')" />
+          </div>
+
           <div class="flex gap-4 mb-4">
             <div v-for="item in attachmentList" :key="item" class="w-[4em] h-[4em]">
               <AttachmentPreview  :atachment-link="item" @on-remove-click="handRemoveAttachment(item)">
@@ -109,10 +116,13 @@
 import { Box, Info, MoreVertical, Send, Paperclip, ChevronRight, ExternalLink } from 'lucide-vue-next';
 import OrderSideDetail from "~/components/orders/OrderSideDetail.vue";
 import AttachmentPreview from "~/components/dashboard/AttachmentPreview.vue";
+import PaymentAction from "~/components/orders/PaymentAction.vue"
 
 const props = defineProps<{
   order: any;
 }>()
+
+const emits = defineEmits(['paymentCompleted'])
 
 const newMessage = ref('');
 

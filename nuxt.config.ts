@@ -1,5 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    head: {
+      script: [
+        { src: 'https://checkout.flutterwave.com/v3.js' },
+      ]
+    }
+  },
   compatibilityDate: '2024-11-01',
   future: {
     compatibilityVersion: 4,
@@ -47,7 +54,8 @@ export default defineNuxtConfig({
     cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
     public: {
       apiServerBaseUrl: process.env.API_SERVER_BASE_URL || 'https://printflow-api.greenedge-resources.com',
-      cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME
+      cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
+      flutterwavePublicKey: process.env.FLUTTERWAVE_PUBLIC_KEY || 'FLWPUBK_TEST-8806f72c69b3d340de2259cbd5633205-X'
     }
   },
   
